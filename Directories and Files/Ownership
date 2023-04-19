@@ -1,4 +1,3 @@
-
 sudo mkdir -p /sysadmin/data
 sudo chown root:sysadmin /sysadmin/data
 sudo chmod 770 /sysadmin/data
