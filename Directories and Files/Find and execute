@@ -1,0 +1,1 @@
+find /home/usersdata/ -type f -user rose -exec cp --parents {} /beta/ \;
