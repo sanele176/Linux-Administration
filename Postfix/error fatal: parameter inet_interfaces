@@ -1,0 +1,3 @@
+Fix from postfix config file will require a minor change by replacing localhost with 127.0.0.1 from directive inet_interfaces.
+Fix from /etc/hosts file will require deleting line ::1 localhost localhost.localdomain localhost6 localhost6.localdomain6. 
+This line tells to OS that it have IPV6 localhost interface so you ca remove it because you don’t have it
