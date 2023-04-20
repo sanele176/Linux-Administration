@@ -1,0 +1,1 @@
+sudo lvresize --extents 100%VG ol/swap
