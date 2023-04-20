@@ -1,0 +1,2 @@
+replace word and redirect, escape \b to filter for a word
+sed -e 's/\bfrom\b/their/g' /home/BSD.txt > /home/BSD_REPLACE.txt
