@@ -1,0 +1,3 @@
+
+search and delete , redirect output
+sudo sed '/code/d' /home/BSD.txt >/home/BSD_DELETE.txt
