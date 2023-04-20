@@ -1,0 +1,2 @@
+
+sudo lvresize --size 1G volume1/smalldata
