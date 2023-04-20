@@ -1,0 +1,2 @@
+cd /var/www/html/official
+sudo find . -type f -name "*.js" -exec cp --parents {} /official \;
