@@ -1,0 +1,5 @@
+yum remove mariadb mariadb-server
+rm -rf /var/lib/mysql
+yum install mariadb mariadb-server
+systemctl start mariadb
+systemctl enable mariadb
