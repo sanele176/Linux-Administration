@@ -1,0 +1,12 @@
+##hide the version number of the Apache web serve
+vi /etc/httpd/conf/httpd.conf
+ServerTokens Prod
+ServerSignature Off
+
+
+##disable directory listing for the /var/www/html/
+(use options -Indexes)
+<Directory “/var/www/html”>
+Options -Indexes
+AllowOverride None
+Require all granted
