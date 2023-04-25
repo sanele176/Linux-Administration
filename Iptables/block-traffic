@@ -1,2 +1,3 @@
 #block apache traffic configured to run on port 6000
 sudo iptables -A INPUT -p tcp --dport 6000 -j DROP
+sudo service iptables save
