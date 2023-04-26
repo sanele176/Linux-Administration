@@ -1,0 +1,17 @@
+Task 1 : Install the httpd package and start its service using the following commands:
+sudo yum install httpd
+sudo systemctl start httpd
+
+Task 2 : Edit the Apache configuration file at /etc/httpd/conf/httpd.conf to change the default port to 6000. Search for the following line in the file:
+Listen 80
+
+Task 3 : Create an index.html file in the default document root of Apache located at /var/www/html/ using the following command:
+sudo vi /var/www/html/index.html
+
+Task 4 : Edit the Apache configuration file at /etc/httpd/conf/httpd.conf to enable the required headers. Add the following lines to the file:
+Header set X-XSS-Protection "1; mode=block"
+Header set X-Frame-Options SAMEORIGIN
+Header set X-Content-Type-Options nosniff
+
+Task 5 : restart httpd
+sudo systemctl restart httpd
