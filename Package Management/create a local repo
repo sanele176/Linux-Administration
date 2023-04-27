@@ -1,0 +1,7 @@
+create file in /etc/yum.repos.d/localyum.repo
+
+[localyum]
+name=localyum
+baseurl=file:///packages/downloaded_rpms
+enabled=1
+gpgcheck=0
