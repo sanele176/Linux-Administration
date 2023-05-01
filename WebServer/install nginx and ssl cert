@@ -1,0 +1,20 @@
+step 1 : sudo yum install epel-release -y
+step 2 : sudo yum install nginx -y
+step 3 : sudo vi /etc/nginx/nginx.conf
+server {
+    listen  443 ssl http2 default_server;
+    listen  [::]:433 ssl http2 default_server;
+    server_name 172.16.238.11;
+    root   /usr/share/nginx/html;
+    ssl_certificate "/etc/pki/CA/certs/nautilus.crt";
+    ssl_certificate_key "/etc/pki/CA/private/nautilus.key";
+    ssl_session_cache shared:SSL:1m;
+    ssl_session_timeout    10m;
+   
+step 4 : move cert and cert key to directory
+sudo cp /tmp/nautilus.crt /etc/pki/CA/certs 
+sudo cp /tmp/nautilus.key  /etc/pki/CA/private
+step 5 : create index file and test
+sudo echo  Welcome!>>index.html
+sudo mv index.html /usr/share/nginx/html
+curl -Ik https://172.16.238.12  ## use ip of app server
