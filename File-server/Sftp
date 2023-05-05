@@ -1,0 +1,30 @@
+Question : Some of the developers from Nautilus project team have asked for 
+SFTP access to at least one of the app server in Stratos DC. 
+After going through the requirements, the system admins team has decided to 
+configure the SFTP server on App Server 3 server in Stratos Datacenter. 
+Please configure it as per the following instructions:
+
+a. Create an SFTP user anita and set its password to dCV3szSGNA.
+b. Password authentication should be enabled for this user.
+c. Set its ChrootDirectory to /var/www/nfsshare.
+d. SFTP user should only be allowed to make SFTP connections
+
+Step 1 : useradd anita
+         passwd anita
+        
+Step 2 : mkdir -p /var/www/nfsshare
+Step 3 : chown root:root  /var/www
+Step 4 : chmod -R 755 /var/www
+Step 5 : vi /etc/ssh/sshd_config
+         #subsystem      sftp    /usr/libexec/openssh/sftp-server
+         Subsystem       sftp    internal-sftp
+         Match User anita
+         ForceCommand internal-sftp
+         PasswordAuthentication yes
+         ChrootDirectory /var/www/nfsshare
+         PermitTunnel no
+         AllowTcpForwarding no
+         X11Forwarding no
+         AllowAgentForwarding no
+         
+Step 6 : systemctl restart sshd
