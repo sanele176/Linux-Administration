@@ -1,0 +1,26 @@
+Question:   The production support team of xFusionCorp Industries has deployed some of the 
+latest monitoring tools to keep an eye on every service, application, etc. running on the systems. 
+One of the monitoring systems reported about Apache service unavailability on one of the app servers in Stratos DC.
+
+Identify the faulty app host and fix the issue. Make sure Apache service is up and running on all app hosts. 
+They might not hosted any code yet on these servers so you need not to worry about if Apache isn't serving any pages or not, 
+just make sure service is up and running. Also, make sure Apache is running on port 8087 on all app servers.
+
+Step 1. At first identify the app server which has issue by running the below commands
+thor@jump_host ~$ telnet stapp01 8087
+Trying 172.16.238.10...
+telnet: connect to address 172.16.238.10: Connection refused
+
+Step 2. login on app server which has connection refuse error & switch to root  
+Step 3. check logs
+    journalctl -xe -u httpd
+Step 4. With the help of  netstat check which service is using your port and whats is PID. In below snipping ( refer to  below video for more details)
+    netstat -tulnp
+Step 5. Confirm the PID as per  the netstat output 
+    ps -ef  |grep sendmail
+Step 6. kill the service use same port as httpd
+    kill (processID)
+Step 7.  Start the httpd service & check the status.
+ 
+Step 8.  Validate Apache HTTPd running  as per the task request
+telnet stapp01 8087
