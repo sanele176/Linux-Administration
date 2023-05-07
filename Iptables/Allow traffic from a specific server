@@ -1,0 +1,24 @@
+Tasks:
+1. Install iptables and all its dependencies on each app host.
+2. Block incoming port 8081 on all apps for everyone except for LBR host.
+3. Make sure the rules remain, even after system reboot
+
+Solution
+
+Step 1 : yum install  -y iptables-services
+
+Step 2 : systemctl start iptables && systemctl enable iptables
+
+Step 3 : Allow traffic to 8081 only when coming from LB Server
+  iptables -A INPUT -p tcp --destination-port 8081 -s 172.16.238.14 -j ACCEPT
+  iptables -A INPUT -p tcp --destination-port 8081 -j DROP
+  
+Step 4 : Reject ICMP
+  iptables -L --line-numbers
+  iptables -R INPUT 5 -p icmp -j REJECT
+  
+Step 5 : Save Iptables config
+  service iptables save
+  
+Step 6 : Restart Iptables
+  systemctl restart iptables && systemctl status iptables
