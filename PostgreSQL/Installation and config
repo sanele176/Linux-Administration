@@ -1,0 +1,33 @@
+Task ;
+   a. Install and configure PostgreSQL database on Nautilus database server.
+   b. Create a database user kodekloud_top and set its password to TmPcZjtRQx.
+   c. Create a database kodekloud_db7 and grant full permissions to user kodekloud_top on this database.
+   d. Make appropriate settings to allow all local clients (local socket connections) to 
+      connect to the kodekloud_db7 database through kodekloud_top user using md5 method (Please do not try to encrypt password with md5sum).
+   e. At the end its good to test the db connection using these new credentials from root user or server's sudo user.
+   
+Step 1 : yum -y install postgresql-server postgresql-contrib
+Step 2 : postgresql-setup initdb
+Step 3 : systemctl enable --now postgresql
+Step 4 : sudo -u postgres psql
+Step 5 : 
+   - CREATE USER kodekloud_top WITH PASSWORD 'TmPcZjtRQx';
+   - GRANT ALL PRIVILEGES ON DATABASE "kodekloud_db7" to kodekloud_top;
+   -  \q (To quit)
+   
+Step 6 : vi /var/lib/pgsql/data/postgresql.conf
+   uncomment localhost
+   listen_addresses = 'localhost' 
+Step 7 : Edit another config file pg_hba.conf  &  configure the md5 at bottom of the config
+   vi /var/lib/pgsql/data/pg_hba.conf
+   local   all             all                                             md5
+
+   host    all             all             127.0.0.1/32            md5
+
+   host    all             all             ::1/128                    md5
+ Step 8 : systemctl restart postgresql
+ Step 9 Test
+   psql -U kodekloud_top -d kodekloud_db7 -h 127.0.0.1 -W   or 
+   psql -U kodekloud_top -d kodekloud_db7 -h localhost -W
+   
+
