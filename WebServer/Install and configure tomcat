@@ -1,0 +1,15 @@
+Task : 
+    a. Install tomcat server on App Server 2 using yum.
+    b. Configure it to run on port 5001.
+    c. There is a ROOT.war file on Jump host at location /tmp. Deploy it on this tomcat server and 
+    make sure the webpage works directly on base URL i.e without specifying any sub-directory anything like this http://URL/ROOT
+    
+Step 1 : scp /tmp/ROOT.war steve@stapp02:/tmp
+Step 2 : yum install -y tomcat
+Step 3 : vi /usr/share/tomcat/conf/server.xml
+     change non-SSL HTTP/1.1 to 5001
+Step 4 : copy war file from tmp to tomcat root directory
+     cp /tmp/ROOT.war /usr/share/tomcat/webapps
+Step 5 : systemctl start tomcat
+Step 6 : Test
+     curl -i http://stapp02:5001
