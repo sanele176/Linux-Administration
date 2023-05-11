@@ -1,0 +1,16 @@
+Task :
+We want to open all incoming connections to Nginx's port 
+and block all incoming connections to Apache's port. 
+Also make sure rules are permanent.
+
+Steps :
+ - systemctl start iptables
+ - iptables -A INPUT -p tcp --dport 8094 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+ - iptables -A INPUT -p tcp --dport 3000 -m conntrack --ctstate NEW -j REJECT
+ - iptables -L --line-numbers
+ - iptables -R INPUT 5 -p icmp -j REJECT
+ - service iptables save
+
+Test:
+ - telnet stbkp01 3000 (should refuse connection)
+ - telnet stbkp01 8094 (should connect)
