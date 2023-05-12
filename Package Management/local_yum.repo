@@ -12,6 +12,7 @@ Steps :
     gpgcheck = 0
   - yum repolist
   - yum install httpd
+  ----Task finished-----
   
 In this case rpm file already downloaded to : /packages/downloaded_rpms/  (sample content)
 apr-1.4.8-5.el7.x86_64.rpm
