@@ -1,0 +1,20 @@
+- name: Create file in appservers
+
+  hosts: stapp01, stapp02, stapp03
+
+  become: yes
+
+  tasks:
+
+    - name: Create the file and set properties
+
+      file:
+
+        path: /home/web.txt
+
+        owner: "{{ ansible_user }}"
+
+        group: "{{ ansible_user }}"
+
+        mode: "0755"
+        state: touch
