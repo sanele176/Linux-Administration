@@ -1,0 +1,4 @@
+Allow crontab access to ammar user and deny the same to rod user.
+
+echo "ammar" > /etc/cron.allow
+echo "rod" > /etc/cron.deny
