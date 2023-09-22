@@ -1,0 +1,9 @@
+Use tools like telnet, netstat, etc. to find and fix the issue. 
+Also make sure Apache is reachable from the jump host without compromising any security settings.
+Once fixed, you can test the same using command curl http://stapp01:8089 command from jump host.
+
+- use netstat -tulnp (ditermine service already using port)
+- kill the service
+- systemctl start httpd
+
+IPtables rule
