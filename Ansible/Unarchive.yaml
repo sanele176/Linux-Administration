@@ -1,0 +1,21 @@
+- name: Extract archive
+
+  hosts: stapp01, stapp02, stapp03
+
+  become: yes
+
+  tasks:
+
+    - name: Extract the archive and set the owner/permissions
+
+      unarchive:
+
+        src: /usr/src/data/datacenter.zip
+
+        dest: /opt/data/
+
+        owner: "{{ ansible_user }}"
+
+        group: "{{ ansible_user }}"
+
+        mode: "0655"
