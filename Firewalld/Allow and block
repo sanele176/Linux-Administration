@@ -1,0 +1,13 @@
+
+script to block 8080 allow 80,install nginx, httpd
+
+yum install firewalld -y
+systemctl restart firewalld
+yum install nginx -y
+yum install httpd -y
+systemctl start nginx
+systemctl start httpd
+firewall-cmd --zone=public --add-port=80/tcp --permanent
+firewall-cmd --zone=public --add-port=8080/tcp --permanent
+firewall-cmd --zone=public --remove-port=8080/tcp --permanent
+systemctl restart firewalld
