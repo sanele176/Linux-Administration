@@ -1,0 +1,27 @@
+To see all the services available, use this command:
+
+$ sudo firewall-cmd --get-services
+
+Output:
+
+RH-Satellite-6 amanda-client bacula bacula-client dhcp dhcpv6 
+dhcpv6-client dns ftp high-availability http https imaps ipp ipp-client 
+ipsec kerberos kpasswd ldap ldaps libvirt libvirt-tls mdns mountd ms-wbt 
+mysql nfs ntp openvpn pmcd pmproxy pmwebapi pmwebapis pop3s postgresql 
+proxy-dhcp radius rpc-bind samba samba-client smtp ssh telnet tftp 
+tftp-client transmission-client vnc-server wbem-https
+or, to see those currently accessible in a particular zone, run:
+
+$ sudo firewall-cmd --list-services --zone=public
+
+Output:
+
+dhcpv6-client ssh
+
+To add a service to a zone, type:
+
+$ sudo firewall-cmd --permanent --zone=home --add-service=dhcp
+
+Output:
+
+success
