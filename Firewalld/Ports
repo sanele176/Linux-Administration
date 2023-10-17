@@ -1,0 +1,10 @@
+$ sudo firewall-cmd --zone=home --add-port=21/tcp
+success
+
+$ sudo firewall-cmd --zone=home --list-ports
+21/tcp
+
+where by looking at /etc/services we can ascertain that port 21 corresponds to ftp (command and output below):
+
+$ grep " 21/tcp" /etc/services
+ftp              21/tcp
