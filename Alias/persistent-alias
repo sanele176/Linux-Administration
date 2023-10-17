@@ -1,0 +1,5 @@
+add to ~/.bashrc
+alias gp="git push"
+
+for global alias
+add it to  /etc/bash.bashrc
