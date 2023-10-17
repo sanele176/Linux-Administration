@@ -1,0 +1,40 @@
+Get the default zone (command and output below):
+
+$ sudo firewall-cmd --get-default-zone
+public
+
+Obtain a list of zones currently being used (command and output below):
+
+$ sudo firewall-cmd --get-active-zones
+public
+  interfaces: eno16777736
+
+List all available zones (command and output below):
+
+$ sudo firewall-cmd --get-zones
+block dmz drop external home internal public trusted work
+
+To change the default zone to trusted and then change it back (commands and outputs below):
+
+$ sudo firewall-cmd --set-default-zone=trusted
+success
+
+$ sudo firewall-cmd --set-default-zone=public
+success
+
+To assign an interface temporarily to a particular zone (command and output below):
+
+$ sudo firewall-cmd --zone=internal --change-interface=eno1
+success
+
+To assign an interface to a particular zone permanently (command and output below):
+
+$ sudo firewall-cmd --permanent --zone=internal --change-interface=eno1
+success
+
+which creates the file /etc/firewalld/zones/internal.xml.
+
+To ascertain the zone associated with a particular interface (command and output below):
+
+$ sudo firewall-cmd --get-zone-of-interface=eno1
+public
