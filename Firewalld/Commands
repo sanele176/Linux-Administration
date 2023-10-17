@@ -38,3 +38,13 @@ To ascertain the zone associated with a particular interface (command and output
 
 $ sudo firewall-cmd --get-zone-of-interface=eno1
 public
+
+To assign a source to a zone (permanently), run this command:
+
+$ sudo firewall-cmd --permanent --zone=trusted --add-source=192.168.1.0/24
+
+Output:
+success
+
+You can list the sources bound to a zone with the following command:
+$ sudo firewall-cmd --permanent --zone=trusted --list-sources 192.168.1.0/24
