@@ -1,0 +1,12 @@
+
+sudo dd if=/dev/zero of=/swapfile bs=1M count=1024 oflag=append conv=notrunc
+In this command /swapfile is the swap file you are going to edit and count=1024 is the exact increase in size.
+
+Disable the swap file:
+sudo swapoff /swapfile
+
+Setup the file as a swap file again.
+sudo mkswap /swapfile
+
+Enable again swaping:
+sudo swapon /swapfile
