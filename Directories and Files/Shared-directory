@@ -1,0 +1,13 @@
+$ sudo mkdir -p /var/www/reports/
+$ sudo groupadd project 
+Then add an existing user who will have write access to the directory: /var/www/reports/ to the group project as below.
+$ sudo usermod -a -G project tecmint
+sudo chgrp -R project /var/www/reports/
+$ sudo chmod -R 2775 /var/www/reports/
+
+Explaining the permissions 2775 in the chmod command above:
+
+2 – turns on the setGID bit, implying–newly created subfiles inherit the same group as the directory, and newly created subdirectories inherit the set GID bit of the parent directory.
+7 – gives rwx permissions for owner.
+7 – gives rwx permissions for group.
+5 – gives rx permissions for others.
