@@ -1,0 +1,24 @@
+Setup VSFTP for anonimous download and upload
+*********************************************
+- dnf install vsftpd
+- systemctl enable --now vsftpd
+- edit your /etc/vsftpd/vsftpd.conf
+  anonymous_enable=YES
+  write_enable=YES
+  local_enable=YES
+  write_enable=YES
+  no_anon_password=YES
+  hide_ids=YES
+  pasv_min_port=40000
+  pasv_max_port=40001
+- For upload part add below
+  anon_mkdir_write_enable=YES
+  anon_upload_enable=YES
+- If firewall is running add rule
+  firewall-cmd --add-service=ftp --perm
+  firewall-cmd --add-port=40000-40001/tcp --perm
+  firewall-cmd --reload
+- configure SELinux to allow passive FTP
+  setsebool -P ftpd_use_passive_mode on
+- change permission on pub dir
+  chmod -R 777 /var/ftp/pub
