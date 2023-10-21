@@ -1,4 +1,4 @@
-Setup VSFTP for anonimous download and upload
+Setup VSFTP for anonymous download and upload
 *********************************************
 - dnf install vsftpd
 - systemctl enable --now vsftpd
