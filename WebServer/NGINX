@@ -1,0 +1,26 @@
+a. Install nginx on LBR (load balancer) server.
+b. Configure load-balancing with the an http context making use of all App Servers.
+c. Also make sure Apache service is up and running on all app servers.
+d. Once done, you can access the website using StaticApp button on the top bar
+
+Steps
+- ensure httpd is running on app servers
+  systemctl start httpd
+
+- confirm httpd Listen port on app servers
+  grep -E "Listen" /etc/httpd/conf/httpd.conf
+
+- Install nginx on LB server
+  yum install nginx y
+
+- Add below to /etc/nginx/nginx.conf (it should be inside httpd tag)
+  upstream backend {
+          server 172.16.238.10:8084;
+          server 172.16.238.11:8084;
+          server 172.16.238.12:8084;
+}
+
+location / {
+        proxy_pass  http://backend;
+    }
+- Start nginx (systemctl start nginx)
