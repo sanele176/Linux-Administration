@@ -1,0 +1,5 @@
+While ignoring the case sensitivity, change all values disabled to enabled in /home/bob/values.conf 
+config file.
+
+For example, any string like disabled, DISABLED, Disabled etc must match and should be replaced with enabled.
+sed -i 's/disabled/enabled/gi' /home/bob/values.conf
