@@ -1,0 +1,15 @@
+scopped sudo
+
+john ALL=(root) /bin/systemctl restart NetworkManager
+To run specific commands with sudo as any target user, 
+for example to allow user john to restart only Apache service using sudo;
+
+john ALL=(ALL) /bin/systemctl restart apache2
+Note that while adding sudo privileges for the user, 
+it is more safer to put the user specific sudo configuration under the /etc/sudoers.d directory for example;
+
+NOTE: Be extra cautions when echoing commands. You can easily mess up and loose sudo access to your system. Unless the root user is allowed to login, you can try to use echo.
+echo "john ALL=(root) /bin/systemctl restart apache2" > /etc/sudoers.d/john
+
+check if sudoers'file contect is correct
+visudo -c /etc/sudoers
