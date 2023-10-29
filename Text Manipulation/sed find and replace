@@ -3,3 +3,12 @@ config file.
 
 For example, any string like disabled, DISABLED, Disabled etc must match and should be replaced with enabled.
 sed -i 's/disabled/enabled/gi' /home/bob/values.conf
+
+*******************************************************************************************************
+
+Change all values enabled to disabled in /home/bob/values.conf config file from line number 500 to 2000.
+sed -i '500,2000s/enabled/disabled/g' values.conf
+
+*******************************************************************************************************
+Replace all occurrence of string #%$2jh//238720//31223 with $2//23872031223 in /home/bob/data.txt file.
+sed -i 's~#%$2jh//238720//31223~$2//23872031223~g' /home/bob/data.txt
