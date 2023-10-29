@@ -1,0 +1,9 @@
+firewall-cmd --list-services
+firewall-cmd --get-services
+firewall-cmd --add-service http --permanent
+
+iptables
+iptables -L
+iptables -P OUTPUT ACCEPT
+iptables -P INPUT ACCEPT
+iptables -save
