@@ -1,0 +1,46 @@
+
+Write a bash script named /opt/scripts/database.sh on Database Server.
+The mariadb database server is already installed on this server.
+
+Add code in the script to perform some database related operations as per conditions given below:
+    a. Create a new database named kodekloud_db01. If this database already exists on the server then script 
+    should print a message Database already exists and if the database does not exist then create the same and 
+    script should print Database kodekloud_db01 has been created. Further, create a user named kodekloud_roy and 
+    set its password to asdfgdsd, also give full access to this user on newly created database (remember to use wildcard host 
+    while creating the user).
+b. Now check if the database (if it was already there) already contains some data (tables)if so then script should  
+print 'database is not empty otherwise import the database dump /opt/db_backups/db.sql and 
+print imported database dump into kodekloud_db01 database.
+
+c. Take a mysql dump which should be named as kodekloud_db01.sql and save it under /opt/db_backups/ directory.
+
+*************************************Script Below*********************************************
+
+#!/bin/bash
+
+# Create a new database named kodekloud_db01.
+if ! mysql -e "SHOW DATABASES LIKE 'kodekloud_db01'" | grep -q kodekloud_db01; then
+  mysql -e "CREATE DATABASE kodekloud_db01";
+  echo "Database kodekloud_db01 has been created"
+else
+  echo "Database already exists"
+fi
+
+# Create a user named kodekloud_roy and set its password to asdfgdsd
+mysql -e "CREATE USER IF NOT EXISTS 'kodekloud_roy'@'%' IDENTIFIED BY 'asdfgdsd'"
+
+# Give full access to the user on the newly created database
+mysql -e "GRANT ALL ON kodekloud_db01.* TO 'kodekloud_roy'@'%'"
+
+# Check if the database already contains some data (tables)
+tables=$(mysql -N -s -e "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = 'kodekloud_db01'")
+if [ $tables -gt 0 ]; then
+  echo "database is not empty"
+else
+  # Import the database dump /opt/db_backups/db.sql
+  mysql kodekloud_db01 < /opt/db_backups/db.sql
+  echo "imported database dump into kodekloud_db01 database"
+fi
+
+# Take a mysql dump and save it under /opt/db_backups/ directory
+mysqldump kodekloud_db01 > /opt/db_backups/kodekloud_db01.sql
