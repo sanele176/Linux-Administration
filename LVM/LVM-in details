@@ -30,3 +30,13 @@ destroy a mounted, LV, VG
 lvchange -an /dev/vol_grp/log_grp1
 lvremove /dev/vol_grp/log_grp1
 vgremove vol_grp
+
+Partitions
+MBR
+partprobe(to update)
+mount -a (mount all) show errors
+
+mounting using label
+xfs admin -L videos /dev/sda5
+then on fstab
+LABEL=videos  /videos xfs default 0 0
