@@ -1,0 +1,32 @@
+LVM
+#first add or create physical
+pvcreate /dev/sdb3
+
+#create volume group
+vgcreate vgdata /dev/sdb3
+
+#create logical volume
+lvcreate -L 4G -n lvdata /dev/sdb3
+
+#create partition
+mkfs.xfs /dev/vgdata/lvdata
+
+#persistence mount
+on fstab
+/dev/vgdata/lvdata  /mydata  xfs  default  0 0
+
+Resizing LVM
+ext4 grow and shrink
+xfs grow only
+
+lvreduce -L -1G -r /dev/vgdata/lvdata
+lvextend -L +1G -r /dev/vgdata/lvdata
+
+add space to vg
+vgextend vgdata /dev/sda6
+
+destroy a mounted, LV, VG
+
+lvchange -an /dev/vol_grp/log_grp1
+lvremove /dev/vol_grp/log_grp1
+vgremove vol_grp
