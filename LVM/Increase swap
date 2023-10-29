@@ -1,0 +1,12 @@
+Increase the existing swap (i.e /swapfile) size by 1GB
+
+sudo dd if=/dev/zero of=/swapfile bs=1M count=1024 oflag=append conv=notrunc
+
+Disable the swap file:
+sudo swapoff /swapfile
+
+Setup the file as a swap file again.
+sudo mkswap /swapfile
+
+Enable again swaping:
+sudo swapon /swapfile
