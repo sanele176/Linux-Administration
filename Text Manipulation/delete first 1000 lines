@@ -1,0 +1,4 @@
+Delete first 1000 lines from /home/bob/testfile file.
+
+Make sure cursor is on the very first line, then without entering into the insert mode, 
+enter number 1000 and press dd immediately after that. FInally save the file.
