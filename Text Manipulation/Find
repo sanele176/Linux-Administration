@@ -5,3 +5,8 @@ To make this easier to understand, the logic of the command can be broken down l
    it will still match.
 -> Permissions for others have not to be r or w. That means, if any of these two permissions,
    r or w match for others, the result has to be excluded.
+
+*********************************************************************************************
+
+In /home/bob/textfile file there's a number that has 5 digits. Save the same in /home/bob/number file.
+egrep '[0-9]{5}' textfile > /home/bob/number
