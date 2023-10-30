@@ -1,0 +1,20 @@
+a. Install httpd, php and its dependencies on all app hosts.
+b. Apache should serve on port 8085 within the apps.
+c. Install/Configure MariaDB server on DB Server.
+d. Create a database named kodekloud_db5 and create a database user named kodekloud_top identified as password <password>. 
+   Further make sure this newly created user is able to perform all operation on the database you created.
+e. Finally you should be able to access the website on LBR link, by clicking on the App button on the top bar. 
+   You should see a message like App is able to connect to the database using user kodekloud_top
+
+
+Steps;
+- Install httpd and php on all servers
+  yum install httpd php* -y
+- Start httpd and change Listening port
+  vi /etc/httpd/conf/httpd
+  Listen 8086
+  Systemctl start httpd
+- Install mariadb on db server
+  yum install maria mariabd -y
+- Create db, db user and grant all operation
+ 
