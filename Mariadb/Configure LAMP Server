@@ -17,4 +17,11 @@ Steps;
 - Install mariadb on db server
   yum install maria mariabd -y
 - Create db, db user and grant all operation
+  mysql
+  CREATE DATABASE kodekloud_db5;
+  CREATE USER IF NOT EXISTS 'kodekloud_top'@'%' IDENTIFIED BY 'asdfgdsd';
+  GRANT ALL ON kodekloud_db5.* TO 'kodekloud_top'@'%';
+exit mysql
+  systemctl start mariadb
+- curl localhost:8086
  
