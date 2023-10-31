@@ -1,0 +1,12 @@
+a. Install/Configure MariaDB server.
+   yum install mariadb-* -y
+
+b. Create a database named kodekloud_db8.
+   mysql
+   create database kodekloud_db8;
+
+c. Create a user called kodekloud_pop and set its password to Rc5C9EyvbU.
+   CREATE USER IF NOT EXISTS 'kodekloud_pop'@'%' IDENTIFIED BY 'Rc5C9EyvbU';
+
+d. Grant full permissions to user kodekloud_pop on database kodekloud_db8.
+   GRANT ALL ON kodekloud_db8.* TO 'kodekloud_pop'@'%';
