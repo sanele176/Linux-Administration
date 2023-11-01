@@ -1,0 +1,33 @@
+a. Install httpd package and dependencies on app server 2.
+b. Apache should serve on port 3003.
+c. There are two website's backups /home/thor/beta and /home/thor/demo on jump_host. 
+   Set them up on Apache in a way that beta should work on the link http://localhost:3003/beta/ 
+   and demo should work on link http://localhost:3003/demo/ on the mentioned app server.
+
+******************************************************************************************
+- sudo yum install httpd -y
+- vi /etc/httpd/conf/httpd.conf
+  Listen 3003
+<VirtualHost *:3003>
+    ServerName localhost
+</VirtualHost>
+
+- sudo mkdir /var/www/html/beta
+  sudo mkdir /var/www/html/demo
+- sudo cp /home/thor/beta /var/www/html/beta
+  sudo cp /home/thor/demo /var/www/html/demo
+- Create Apache configuration files for the beta and demo websites:
+vi /etc/httpd/conf.d/beta.conf
+<VirtualHost *:3003>
+  ServerName localhost
+  DocumentRoot /var/www/html/beta
+</VirtualHost>
+
+vi /etc/httpd/conf.d/demo.conf
+<VirtualHost *:3003>
+  ServerName localhost
+  DocumentRoot /var/www/html/demo
+</VirtualHost>
+
+- sudo systemctl restart httpd
+
