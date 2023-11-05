@@ -1,0 +1,71 @@
+Create an empty file /opt/dba/blog.txt on app server 1; its user owner and group owner should be tony. 
+Create a symbolic link of source path /opt/dba to destination /var/www/html.
+
+Create an empty file /opt/dba/story.txt on app server 2; its user owner and group owner should be steve. 
+Create a symbolic link of source path /opt/dba to destination /var/www/html.
+
+
+Create an empty file /opt/dba/media.txt on app server 3; its user owner and group owner should be banner. 
+Create a symbolic link of source path /opt/dba to destination /var/www/html.
+
+Solution playbook
+
+- name: Create text files and create soft link
+
+  hosts: stapp01, stapp02, stapp03
+
+  become: yes
+
+  tasks:
+
+    - name: Create the blog.txt on stapp01
+
+      file:
+
+        path: /opt/dba/blog.txt
+
+        owner: tony
+
+        group: tony
+
+        state: touch
+
+      when: inventory_hostname == "stapp01"
+
+    - name: Create the story.txt on stapp02
+
+      file:
+
+        path: /opt/dba/story.txt
+
+        owner: steve
+
+        group: steve
+
+        state: touch
+
+      when: inventory_hostname == "stapp02"
+
+    - name: Create the media.txt on stapp03
+
+      file:
+
+        path: /opt/dba/media.txt
+
+        owner: banner
+
+        group: banner
+
+        state: touch
+
+      when: inventory_hostname == "stapp03"
+
+    - name: Link /opt/itadmin directory
+
+      file:
+
+        src: /opt/dba
+
+        dest: /var/www/html
+
+        state: link
