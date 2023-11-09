@@ -1,0 +1,37 @@
+We have a file /opt/sysops/blog.txt on app server 1. 
+Using Ansible replace module replace string xFusionCorp to Nautilus in that file.
+
+We have a file /opt/sysops/story.txt on app server 2. 
+Using Ansiblereplace module replace the string Nautilus to KodeKloud in that file.
+
+We have a file /opt/sysops/media.txt on app server 3. 
+Using Ansible replace module replace string KodeKloud to xFusionCorp Industries
+
+Playbook
+
+- hosts: stapp01
+  gather_facts: false
+  become: yes
+  tasks:
+  - replace:
+      path: /opt/sysops/blog.txt
+      regexp: 'xFusionCorp'
+      replace: 'Nautilus'
+
+- hosts: stapp02
+  gather_facts: false
+  become: yes
+  tasks:
+  - replace:
+      path: /opt/sysops/story.txt
+      regexp: 'Nautilus'
+      replace: 'KodeKloud'
+
+- hosts: stapp03
+  gather_facts: false
+  become: yes
+  tasks:
+  - replace:
+      path: /opt/sysops/media.txt
+      regexp: 'KodeKloud'
+      replace: 'xFusionCorp Industries'
