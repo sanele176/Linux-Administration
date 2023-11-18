@@ -1,0 +1,6 @@
+#!/bin/bash
+for each_ser in $(cat servers)
+do
+echo "Executing on $each_ser"
+sshpass -f pass ssh -o StrictHostKeyChecking=no root@$each_ser "uname; hostnamectl"
+done
