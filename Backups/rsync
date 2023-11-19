@@ -1,0 +1,8 @@
+To sync remote directories or file
+rsync -arv awx.yaml root@192.168.8.111:/home/
+- use -i to perform a differential between directories
+- use --progress to show progress when transfering large file
+- use --include, --exclude to include and exclude file patterns when syncing
+
+To delete file on remore dir 
+rsync -arv awx.yaml --delete root@192.168.8.111:/home/
