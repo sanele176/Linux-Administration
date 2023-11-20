@@ -1,0 +1,294 @@
+oot@localhost system]# history
+    1  echo 0 > /sys/bus/cpu/devices/cpu1/online 
+    2  exit
+    3  echo 1 > /sys/bus/cpu/devices/cpu1/online 
+    4  killall dd
+    5  exit
+    6  systemctl status sshd
+    7  systemctl disable --now sshd.socket
+    8  systemctl disable --now sshd.service
+    9  systemctl show sshd.service
+   10  systemctl edit sshd.service
+   11  systemctl disable --now sshd.socket
+   12  systemctl start sshd.service
+   13  systemctl cat sshd.service
+   14  systemctl status sshd.service
+   15  systemctl show sshd.service
+   16  man systemd.directives
+   17  systemctl edit sshd.service
+   18  systemctl cat sshd.service
+   19  systemctl status sshd.service
+   20  cat /etc/fstab
+   21  systemctl list-units -t mount
+   22  systemctl list-units -t swap
+   23  cd /run/systemd/generator/
+   24  ls
+   25  cat boot.mount 
+   26  cp boot.mount /etc/systemd/system/
+   27  cd /etc/systemd/system/
+   28  cat boot.mount 
+   29  systemctl enable boot.mount
+   30  systemctl status.service
+   31  systemctl status ssh.service
+   32  systemctl status sshd.service
+   33  systemctl cat sshd.service
+   34  systemctl list-dependencies 
+   35  pwd
+   36  vim boot.mount 
+   37  umount /boot
+   38  mount | grep boot
+   39  systemctl enable --now boot.mount
+   40  vim /etc/fstab
+   41  reboot
+   42  systemctl cat sshd.service 
+   43  systemctl -t help
+   44  systemctl status sshd
+   45  journalctl -u sshd
+   46  journalctl -ux sshd
+   47  journalctl -xu sshd
+   48  systemctl status
+   49  systemctl stop sshd; systemctl start sshd
+   50  systemctl cat sshd
+   51  systemctl status sshd
+   52  kill -9 3373
+   53  systemctl status sshd
+   54  systemctl cat sshd.socket
+   55  systemctl disable --now sshd
+   56  systemctl status sshd
+   57  ps aux | grep sshd
+   58  systemctl enable --now sshd.socket
+   59  ps aux | grep ssh
+   60  systemctl status sshd
+   61  ssh localhost
+   62  ssh student@localhost
+   63  systemctl status boot.mount
+   64  cd /run/systemd/generator/
+   65  cat -.mount
+   66  cat -- -.mount
+   67  cp -- -.mount /etc/systemd/system/
+   68  cd /etc/systemd/system/
+   69  vim -- -.mount
+   70  systemctl enable --now -- -.mount
+   71  vim /etc/default/grub 
+   72  vim /boot/grub2/grub.cfg 
+   73  vim /etc/fstab
+   74  reboot
+   75  ls /run/systemd/generator/
+   76  cat /etc/fstab
+   77  cd /boot/grub2/
+   78  vim grub.cfg 
+   79  cd /etc/default/
+   80  vim grub 
+   81  grub2-mkconfig -o /boot/grub2/grub.cfg
+   82  reboot
+   83  systemctl start graphical.target
+   84  vim hello
+   85  ls -l /etc/shadow
+   86  cat /etc/shadow
+   87  mv /etc/passwd /etc/passwd.bak
+   88  reboot
+   89  ls -Z /etc/passwd
+   90  df -h
+   91  ls -l /dev/mapper/cs-root 
+   92  ls -l /dev/dm-0
+   93  less /proc/devices 
+   94  lsmod
+   95  lsmod | grep dm
+   96  ls
+   97  ls /home/student/
+   98  /home/student/containers/countdown 30
+   99  ldd $(which ls)
+  100  cd /proc
+  101  ls
+  102  cd 4634
+  103  ls
+  104  cat cmdline 
+  105  cd
+  106  ps aux | grep fire
+  107  cd /proc/5072
+  108  cat cmdline 
+  109  ls
+  110  cd fd
+  111  ls -l | less
+  112  stat /bin/ls
+  113  cd
+  114  reboot
+  115  modprobe -c | grep cdrom
+  116  cd /sys/module/cdrom/
+  117  ls
+  118  pwd
+  119  cd /etc/modprobe.d/
+  120  vim cdrom.conf 
+  121  reboot
+  122  modprobe -c | grep cdrom
+  123  cd /sys/module/cdrom/
+  124  ls
+  125  ls sections/
+  126  cat sections/__param
+  127  cd
+  128  ls
+  129  /home/student/containers/countdown 10
+  130  cd /proc
+  131  cat cpuinfo 
+  132  grep vmx cpuinfo 
+  133  lscpu
+  134  less meminfo 
+  135  cat cmdline 
+  136  cat vmstat 
+  137  cat modules 
+  138  lsmod
+  139  cat filesystems 
+  140  cat devices 
+  141  cat swaps 
+  142  cat mounts 
+  143  cat /etc/mtab 
+  144  ls
+  145  cd 2403
+  146  ls
+  147  cat status
+  148  ps aux | grep 2402
+  149  cd /proc
+  150  ls
+  151  cd sys
+  152  ls
+  153  cd net
+  154  ls
+  155  cd ipv6
+  156  ls
+  157  sysctl -a 
+  158  sysctl -a | grep disable
+  159  cd conf
+  160  cd all/
+  161  ls
+  162  ip a
+  163  echo 1 > disable_ipv6 
+  164  ip a
+  165  sysctl -a | grep disable
+  166  vim /etc/sysctl.d/50-disable-ipv6.conf
+  167  cd /proc
+  168  ls
+  169  echo h > /proc/sysrq-trigger 
+  170  dmesg
+  171  history -w
+  172  dnf install -y watchdog
+  173  systemctl enable --now watchdog
+  174  systemctl status watchdog
+  175  modprobe -i softdog
+  176  history -w
+  177  dnf install -y bpftrace
+  178  git clone https://github.com/sandervanvugt/luth
+  179  cd luth/
+  180  ls
+  181  less disk_io.bt 
+  182  bpftrace disk_io.bt 
+  183  history
+  184  mail@sandervanvugt.com
+  185  cd ..
+  186  git clone https://github.com/sandervanvugt/bash
+  187  git clone https://github.com/sandervanvugt/bash-scripting
+  188  cd bash-scripting/
+  189  ls
+  190  vim network 
+  191  cd /usr/lib/systemd/system
+  192  ls
+  193  vim sshd.service 
+  194  cd /etc/systemd/system/
+  195  ls
+  196  systemctl edit sshd.service
+  197  export EDITOR=/usr/bin/vim
+  198  systemctl edit sshd.service
+  199  systemctl cat sshd.service
+  200  systemctl status sshd.service
+  201  systemctl disable --now sshd.socket
+  202  systemctl enable --now sshd.service
+  203  systemctl status sshd.service
+  204  systemctl edit sshd.service
+  205  systemctl status sshd.service
+  206  kill -9 24338
+  207  systemctl status sshd.service
+  208  systemctl -t help
+  209  ls -l /etc/cron*/
+  210  systemctl list-unit-files cups*
+  211  systemctl disable --now sshd
+  212  systemctl enable --now sshd.socket
+  213  ss -tunap | grep 22
+  214  systemctl status sshd
+  215  ssh student@localhost
+  216  systemctl cat sshd.socket
+  217  systemctl status sshd.socket
+  218  systemctl status sshd.service
+  219  systemctl show sshd.service
+  220  man systemd.directives
+  221  man systemd.exec
+  222  systemctl edit sshd.service
+  223  history
+
+
+UEFI system
+[root@localhost ~]# history
+    1  grub2-set-password 
+    2  usermod -aG wheel student
+    3  reboot
+    4  xxd -l 512 /dev/sda
+    5  dnf provides */grubx64.efi
+    6  man dnf
+    7  rm /boot/efi/EFI/redhat/grubx64.efi
+    8  cd /boot/efi/EFI/centos/
+    9  ls
+   10  rm -f grubx64.efi
+   11  reboot
+   12  lsblk
+   13  xxd -l 512 /dev/sda
+   14  ls
+   15  cd trouble/
+   16  ls
+   17  ./countdown 10
+   18  cd /boot/efi/
+   19  ls
+   20  cd EFI
+   21  ls
+   22  tree
+   23  efibootdump 
+   24  efibootmgr 
+   25  reboot
+   26  free -
+   27  free -m
+   28  cd /etc/default/
+   29  vim grub 
+   30  cd /boot/grub2
+   31  ls -l
+   32  cd ../
+   33  cd efi/EFI/centos/
+   34  ,s
+   35  ls
+   36  ls -l grub.cfg
+   37  #grub2-mkconfig -o /boot/grub2/grub.cfg
+   38  cp /boot/grub2/grub.cfg /boot/grub2/grub.cfg.bak
+   39  grub2-mkconfig -o /boot/grub2/grub.cfg
+   40  reboot
+   41  free -m
+   42  systemctl status mount.target
+   43  systemctl status boot.mount
+   44  mount | grep boot
+   45  cat /etc/fstab
+   46  cd /run/systemd/generator/
+   47  ls
+   48  cp boot-efi.mount /etc/systemd/system/
+   49  cp -- -.mount /etc/systemd/system
+   50  cd /etc/systemd/system/
+   51  vim boot-efi.mount 
+   52  systemctl enable --now boot-efi.mount
+   53  systemctl list-dependencies 
+   54  vim -- -.mount
+   55  systemctl enable -- -.mount
+   56  vim /etc/fstab
+   57  reboot
+   58  mount -o remount,rw /
+   59  systemctl start multi-user.target
+   60  touch hhh
+   61  cat /etc/fstab
+   62  vim /etc/default/grub 
+   63  ls -l /boot/grub2/grub.cfg
+   64  grub2-mkconfig -o /boot/grub2/grub.cfg
+   65  reboot
+   66  history
