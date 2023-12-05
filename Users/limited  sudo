@@ -11,5 +11,8 @@ it is more safer to put the user specific sudo configuration under the /etc/sudo
 NOTE: Be extra cautions when echoing commands. You can easily mess up and loose sudo access to your system. Unless the root user is allowed to login, you can try to use echo.
 echo "john ALL=(root) /bin/systemctl restart apache2" > /etc/sudoers.d/john
 
+restrict changing root passwd for scopped users
+linda ALL=/bin/systemctl restart apache2, /usr/bin/passwd, ! /usr/bin/passwd root
+
 check if sudoers'file contect is correct
 visudo -c /etc/sudoers
