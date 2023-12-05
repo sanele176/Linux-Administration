@@ -4,4 +4,8 @@
 - Package Management
 - Security
 - Networking
+- File server (vsftp)
+- Mail relay Configuration
+- Web server (httpd,tomcat,nginx)
+- Files and Directory permissions
   
