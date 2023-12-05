@@ -8,4 +8,5 @@
 - Mail relay Configuration
 - Web server (httpd,tomcat,nginx)
 - Files and Directory permissions
+- Time synchronization
   
