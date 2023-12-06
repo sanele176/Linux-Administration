@@ -1,0 +1,39 @@
+Task: configure email relay via gmail in linux server
+
+solution:
+yum install postfix -y
+yum install cyrus-sasl2-2 libsasl2-modules -y
+2. Enable "Less Secure Apps" in Gmail:
+Get token
+3. Configure Postfix:
+
+Edit the main Postfix configuration file:
+sudo vi/etc/postfix/main.cf
+Add the following lines to the file:
+
+relayhost = [smtp.gmail.com]:587
+smtp_use_tls = yes
+smtp_sasl_auth_enable = yes
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+smtp_sasl_security_options = noanonymous
+smtp_tls_CAfile = /etc/postfix/cacert.pem
+smtp_tls_policy_maps = hash:/etc/postfix/tls_policy
+
+Postfix configuration file
+4. Create the SASL Password File:
+
+Create a new file for the SASL password:
+sudo nano /etc/postfix/sasl_passwd
+
+Add the following line to the file:
+[smtp.gmail.com]:587 <username@gmail.com>:<password>
+
+Replace <username@gmail.com> with your Gmail email address and <password> with your Gmail password.
+Set the correct permissions for the sasl_passwd file:
+
+sudo chmod 600 /etc/postfix/sasl_passwd
+
+Update the SASL database:
+sudo postmap /etc/postfix/sasl_passwd
+
+Test : echo "This is a test email" | mail -s "Test Email" <recipient@example.com>
