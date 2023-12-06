@@ -1,0 +1,12 @@
+Task : install and configure basic nfs-server
+Solution:
+- yum install nfs-util -y
+- vi /etc/exports
+  /data *(rw,no_root_squash)
+- mount rocky:/Data /Data
+- systemctl start nfs-server
+- showmount -e localhost
+- peristent mount on fstab
+  rocky:/Data  /Data  nfs  _netdev  0 0
+- if firewalld is running
+  firewall-cmd --add-service nfs
