@@ -11,4 +11,5 @@
 - Time synchronization
 - NFS Server
 - DNS Server
+- Scripting & Automation
   
