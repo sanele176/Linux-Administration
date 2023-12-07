@@ -1,7 +1,7 @@
 # Linux-Administration - hands on mini project and tasks
 - Users and Groups
 - Storage management
-- Package Management
+- Package Management (local and remote repos)
 - Security
 - Networking
 - File server (vsftp)
