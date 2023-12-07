@@ -10,3 +10,12 @@ Solution:
   rocky:/Data  /Data  nfs  _netdev  0 0
 - if firewalld is running
   firewall-cmd --add-service nfs
+
+Troubleshooting access denied issue when mounting on client
+- mount -t nfs -vvvv 192.168.8.111:/home/Test /Data2
+or
+- Include insecure option in /etc/exports on NFS server like below:
+  cat /etc/exports 
+  /home/export *(rw,sync,no_root_squash,insecure)
+- Re-export the share:
+  exportfs -rav
