@@ -1,0 +1,1 @@
+sudo lvcreate --name volume_1 -l 100%FREE dba_storage
