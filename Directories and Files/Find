@@ -1,0 +1,15 @@
+1. Find all executable files in the directory /srv/SAMPLE002 and remove them 
+
+find /srv/SAMPLE002 -type f -executable -delete
+
+2. Find all files in the directory /srv/SAMPLE002, which have not been accessed during the last month and remove them
+
+find /srv/SAMPLE002 -type f -atime +30 -delete
+
+3. Find all empty directories in the directory /srv/SAMPLE002 and remove them 
+find /srv/SAMPLE002 -type d -empty -delete
+
+4. Find all files in the directory /srv/SAMPLE002 with a file extension of .tar. Write a list of matching filenames, one per line, to the file /opt/SAMPLE002/toBeCompressed.txt, which has already been created. 
+Ensure that you specify a relative path to each file, using /srv/SAMPLE001 as the base directory for the relative path 
+
+find /srv/SAMPLE002 -name "*.tar" > /opt/SAMPLE002/toBeCompressed.txt
