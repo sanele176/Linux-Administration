@@ -15,6 +15,9 @@ mkfs.xfs /dev/vgdata/lvdata
 on fstab
 /dev/vgdata/lvdata  /mydata  xfs  default  0 0
 
+or
+/dev/mapper/vgdata/lvdata  /mydata  xfs  default  0 0
+
 Resizing LVM
 ext4 grow and shrink
 xfs grow only
