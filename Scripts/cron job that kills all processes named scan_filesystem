@@ -1,0 +1,9 @@
+Create a cron job that kills all processes named scan_filesystem which is owned by root, 
+every minute. 
+
+#!/bin/bash
+pkill -u root scan_filesystem
+
+create crontab job
+crontab -e
+* * * * * /home/admin/scripts/terminate_scan.sh  # Run every minute
