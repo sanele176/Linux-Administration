@@ -1,1 +1,2 @@
 sed -e 's/\bdog\b/dogg/gi' deleme.punK > newme.txt
+(case insensitive)
