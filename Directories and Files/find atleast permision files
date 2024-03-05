@@ -1,0 +1,5 @@
+- find atleast file where owner has read and write
+  find /etc -type f -perm -600 -exec ls -lh {} +
+
+- find exact file prmisions
+  find /etc -type f -perm 600 -exec ls -lh {} +
