@@ -1,0 +1,2 @@
+Find and delete the files in "/opt/appdata" directory that contain a word ending with the letter "t" (case sensitive). in linux using find command
+find /opt/appdata -type f -name "*t" -not -name "*T" -delete
