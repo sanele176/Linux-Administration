@@ -13,3 +13,13 @@ Step 4 : copy war file from tmp to tomcat root directory
 Step 5 : systemctl start tomcat
 Step 6 : Test
      curl -i http://stapp02:5001
+
+Might be optional
+
+yum install tomcat-webapps tomcat-admin-webapps
+vi /usr/share/tomcat/conf/tomcat-users.xml
+Add the following line between <tomcat-users> …. </tomcat-users>
+<user	username="admin" password="YOUR-STRONG-PASSWORD" roles="manager-gui,admin-gui"/>
+
+
+
