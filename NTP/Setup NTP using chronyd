@@ -1,0 +1,11 @@
+- yum install chrony -y
+- vi /etc/chrony.conf
+  add server pools e.g
+     server 0.za.pool.ntp.org
+	   server 1.za.pool.ntp.org
+	   server 2.za.pool.ntp.org
+	   server 3.za.pool.ntp.org
+- systemctl restart chronyd
+For troubleshooting
+chronyc sources -v
+chronyc tracking
