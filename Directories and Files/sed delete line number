@@ -1,0 +1,3 @@
+sed -i -e '5d' /home/users
+
+5==> line number 5, d for delete
