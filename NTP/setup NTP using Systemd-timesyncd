@@ -1,0 +1,10 @@
+- yum install systemd-timesyncd -y
+- vi /etc/systemd/timesyncd.conf
+  [Time]
+  NTP=0.pool.ntp.org 1.pool.ntp.org
+  FallbackNTP=ntp.ubuntu.com 0.debian.pool.ntp.org
+  PollIntervalMaxSec=1000
+  ConnectionRetrySec=20
+- service systemd-timesyncd restart
+- verify with
+  grep systemd-timesyncd /var/log/syslog
