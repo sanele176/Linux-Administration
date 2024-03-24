@@ -1,0 +1,8 @@
+Substitute word beginning with b and ending with e, substitute with GOOD
+sed -i 's/^b.e$/GOOD/g' sefile
+
+Delete worg beginning with b and ending with e
+sed -i 's/^b.e$/d' sefile
+
+Delete case insensitive
+sed -i 's/boy//gi' sefile
