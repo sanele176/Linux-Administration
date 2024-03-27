@@ -1,0 +1,3 @@
+On Application Server 1 create a container named nginx_1 using image nginx with alpine tag and make sure container is in running state.
+
+docker run -d --name nginx_1 nginx:alpine
