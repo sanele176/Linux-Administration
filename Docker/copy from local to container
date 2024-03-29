@@ -1,0 +1,6 @@
+On App Server 2 in Stratos Datacenter copy an encrypted file /tmp/nautilus.txt.gpg from docker host to ubuntu_latest container 
+(running on same server) in /usr/src/ location. Please do not try to modify this file in any way.
+
+- docker ps
+- docker cp /tmp/nautilus.txt.gpg ubuntu_latest:/usr/src
+- docker exec ubuntu_latest  ls -ltr /usr/src    (exec - for running commands on running container)
