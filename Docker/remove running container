@@ -1,0 +1,2 @@
+docker ps
+docker rm kke-container  --force
