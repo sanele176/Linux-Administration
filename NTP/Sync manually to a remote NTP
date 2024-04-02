@@ -1,0 +1,2 @@
+chronyc -a 'burst 4/4 pool.ntp.org'
+chronyc makestep (to adjust time based on config)
