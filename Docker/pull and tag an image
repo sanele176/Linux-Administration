@@ -1,0 +1,4 @@
+Pull busybox:musl image on App Server 2 in Stratos DC and re-tag (create new tag) this image as busybox:local.
+- docker pull busybox:musl
+- docker image tag busybox:musl busybox:local
+- docker images
