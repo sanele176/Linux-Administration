@@ -1,0 +1,6 @@
+- Ensure libvirtd is running
+ systemctl status libvirtd
+ virt-install \
+--name demo-guest1 --memory 2048 \
+--vcpus 2 --disk size=80 --os-variant win10 \
+--cdrom /home/Win10install.iso
