@@ -61,3 +61,17 @@ Installation
 [[inputs.processes]]
 [[inputs.swap]]
 [[inputs.system]]
+
+- systemctl restart telegraf
+- Start Telegraf and Verify If data appears
+ telegraf --config /etc/telegraf/telegraf.conf --test
+- To run configuration test for a specific metric for example, system input plugin;
+ telegraf -test -config /etc/telegraf/telegraf.conf --input-filter system
+
+6. Configure Grafana to Display InfluxDB/Telegraf Metrics
+ - Add InfluxDB Data source
+ - Create Grafana Telegraf Dashboard
+   import already built 5955
+7. Add other servers to poll matrics to influxDB
+ - only install telegraf on the target servers
+ - on the config file point to the influx host, also add db and password
