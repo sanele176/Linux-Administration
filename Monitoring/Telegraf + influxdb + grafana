@@ -1,0 +1,63 @@
+Installation
+1. Install Telegraf on Ubuntu 20.04
+ - wget https://dl.influxdata.com/telegraf/releases/telegraf_1.14.3-1_amd64.deb
+ - dpkg -i telegraf_1.14.3-1_amd64.deb
+ - systemctl enable --now telegraf
+
+2. Install InfluxDB using DEB Package File
+ - wget https://dl.influxdata.com/influxdb/releases/influxdb_1.8.0_amd64.deb
+ - dpkg -i influxdb_1.8.0_amd64.deb
+ - systemctl enable --now influxdb
+
+3. Install Grafana on Ubuntu 20.04
+ - apt install -y adduser libfontconfig1
+ - wget https://dl.grafana.com/oss/release/grafana_7.0.1_amd64.deb
+ - dpkg -i grafana_7.0.1_amd64.deb
+ - systemctl enable --now grafana-server
+
+4. Configure InfluxDB to Store System Metrics Collected by Telegraf
+ - influx
+   Connected to http://localhost:8086 version 1.8.0
+   InfluxDB shell version: 1.8.0
+ > create database telegraf
+ > create user telegraf with password 'myP@SSword'
+ > grant all on telegraf to telegraf
+ > show databases
+ > Exit
+ - test database connection
+   influx -username 'telegraf' -password '' -database telegraf
+
+5. Configuring Telegraf to Collect System Metrics
+ - Generate the Custom Telegraf for the specified metrics;
+   telegraf config -input-filter cpu:mem:swap:system:processes:disk -output-filter influxdb > /etc/telegraf/telegraf.conf
+ - vi /etc/telegraf/telegraf.conf
+  [global_tags]
+[agent]
+  interval = "10s"
+  round_interval = true
+  metric_batch_size = 1000
+  metric_buffer_limit = 10000
+  collection_jitter = "0s"
+  flush_interval = "10s"
+  flush_jitter = "0s"
+  precision = ""
+  hostname = ""
+  omit_hostname = false
+[[outputs.influxdb]]
+  urls = ["http://127.0.0.1:8086"]
+  database = "telegraf"
+  username = "telegraf"
+  password = "myP@SSword"
+[[inputs.cpu]]
+  percpu = true
+  totalcpu = true
+  collect_cpu_time = false
+  report_active = false
+[[inputs.disk]]
+  ignore_fs = ["tmpfs", "devtmpfs", "devfs", "iso9660", "overlay", "aufs", "squashfs"]
+[[inputs.diskio]]
+[[inputs.kernel]]
+[[inputs.mem]]
+[[inputs.processes]]
+[[inputs.swap]]
+[[inputs.system]]
