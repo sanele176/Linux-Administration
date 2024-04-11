@@ -1,0 +1,19 @@
+a. Use ubuntu as the base image.
+b. Install apache2 and configure it to work on 8081 port. 
+  (do not update any other Apache configuration settings like document root etc).
+
+- docker ps
+- vi /opt/docker/Dockerfile
+FROM ubuntu
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update
+RUN apt-get install apache2 -y
+RUN sed -i "s/80/8081/g" /etc/apache2/ports.conf
+EXPOSE 8081
+CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND", "-k", "start"]
+
+- cd /opt/docker/
+- docker build  -t apache2 .
+- docker run --name http -p 8081:8081 -d apache2
+- docker ps
+- curl -Ik http://localhost:8081
