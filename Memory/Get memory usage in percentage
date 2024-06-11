@@ -1,0 +1,2 @@
+Get memory usage in percentage :
+free | awk '/^Mem:/ {print $3/$2 * 100.0}'
