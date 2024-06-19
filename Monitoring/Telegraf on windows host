@@ -1,0 +1,8 @@
+Invoke-WebRequest https://dl.influxdata.com/telegraf/releases/telegraf-1.15.3_windows_amd64.zip -OutFile telegraf.zip
+Expand-Archive .\telegraf.zip 'C:\Program Files\'
+cd 'C:\Program Files\'
+rename folder to telegraf
+.\telegraf --config-directory 'C:\Program Files\telegraf\telegraf.conf' --test
+cd .\telegraf\
+.\telegraf --service install --config-directory 'C:\Program Files\telegraf\telegraf.conf'
+net start telegraf
