@@ -5,6 +5,8 @@
   FallbackNTP=ntp.ubuntu.com 0.debian.pool.ntp.org
   PollIntervalMaxSec=1000
   ConnectionRetrySec=20
+- timedatectl set-ntp true
 - service systemd-timesyncd restart
 - verify with
   grep systemd-timesyncd /var/log/syslog
+
