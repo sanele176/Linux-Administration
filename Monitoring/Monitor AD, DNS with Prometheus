@@ -1,0 +1,7 @@
+- Download Windows Exporter MSI file.
+  https://github.com/prometheus-community/windows_exporter
+- Enable Collectors AD,DNSPermalink
+1. Enable through regedit
+   Win + R > regedit > HKEY_LOCAL_MACHINE > SYSTEM > CurrentControlSet > Services > Windows_exporter
+  Double click on “ImagePath” string to edit. Change it’s value and click ok.
+- Import dashboard : 3969 ID
