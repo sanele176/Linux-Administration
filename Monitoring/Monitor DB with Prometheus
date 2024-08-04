@@ -1,0 +1,11 @@
+- wget https://github.com/prometheus/mysqld_exporter/releases/download/v0.12.1/mysqld_exporter-0.12.1.linux-amd64.tar.gz
+- tar xvfz mysqld_exporter-*.*-amd64.tar.gz
+- cd mysqld_exporter-*.*-amd64
+- mysql
+ > CREATE USER 'exporter'@'%' IDENTIFIED BY 'enter_password_here' WITH MAX_USER_CONNECTIONS 3;
+ - "%" allow connection from anywhere
+ > GRANT PROCESS, REPLICATION CLIENT, SELECT ON *.* TO 'exporter'@'%';
+- export DATA_SOURCE_NAME='exporter:enter_password_here@(mysql_hostname:3306)/'
+- ./mysqld_exporter
+
+- Then add job on prometheus.yml
