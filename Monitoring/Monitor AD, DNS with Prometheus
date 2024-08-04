@@ -4,4 +4,5 @@
 1. Enable through regedit
    Win + R > regedit > HKEY_LOCAL_MACHINE > SYSTEM > CurrentControlSet > Services > Windows_exporter
   Double click on “ImagePath” string to edit. Change it’s value and click ok.
+ - C:\Program files (x86)\windows_exporter\windows_exporter.exe --log.format logger:eventlog?name=windows_exporter --collectors.enabled ad,dns,cs,cpu,logical_disk,memory,service,system,tcp --telemetry.addr :9182
 - Import dashboard : 3969 ID
