@@ -9,3 +9,6 @@
 For troubleshooting
 chronyc sources -v
 chronyc tracking
+
+- force sync time
+ chronyc -a makestep
