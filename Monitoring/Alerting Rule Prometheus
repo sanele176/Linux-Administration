@@ -1,0 +1,14 @@
+- CPU
+Query:
+100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)
+Annotation:
+CPU utilization has exceeded 80% for Host {{ $labels.instance }}. Current Value - {{ printf "%.0f" $values.B.Value }}%
+
+
+- Memory
+Query:
+100 * (1 - (sum by (instance) (node_memory_MemAvailable_bytes) / sum by (instance) (node_memory_MemTotal_bytes)))
+Annotation:
+Message: Memory utilization has exceeded 80% for Host {{ $labels.instance }}. Current Value - {{ printf "%.0f" $values.B.Value }}%
+
+- Disk
