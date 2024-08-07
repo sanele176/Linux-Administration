@@ -12,4 +12,5 @@
 - NFS Server
 - DNS Server
 - Scripting & Automation
+- Monitoring 
   
