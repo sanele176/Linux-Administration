@@ -1,0 +1,15 @@
+/etc/hosts on Nautilus App 2 server requires adjustments to its Access Control Lists (ACLs) as follows:
+
+getfacl  /etc/hosts
+
+1. The file's user owner and group owner should be set to root.
+- chown root:root /etc/hosts
+
+2. Others should possess read only permissions on the file.
+- setfacl -m o:r-- /etc/hosts
+
+3. User yousuf must not have any permissions on the file.
+- setfacl -m yousuf:--- /etc/hosts
+
+4. User ryan should be granted read only permission on the file.
+- setfacl -m ryan:r-- /etc/hosts
