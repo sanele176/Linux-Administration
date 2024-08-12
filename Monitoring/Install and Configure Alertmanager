@@ -1,0 +1,39 @@
+- configure prometheus repo as it also provide alertmanager package
+- sudo yum install alertmanager -y
+- mkdir /etc/alertmanager/
+- vi /etc/alertmanager/alertmanager.yml
+  global:
+  resolve_timeout: 5m
+
+route:
+  receiver: 'default-receiver'
+
+receivers:
+- name: 'default-receiver'
+  email_configs:
+  - to: 'your-email@example.com'
+    from: 'alertmanager@example.com'
+    smarthost: 'smtp.example.com:587'
+
+    auth_username: 'user@example.com'
+    auth_identity: 'user@example.com'
+    auth_password: 'password'
+
+
+- chown -R prometheus:prometheus /etc/prometheus/prometheus.yml
+- systemctl enable alertmanager --now
+- vi /etc/prometheus/prometheus.yml
+  global:
+  scrape_interval: 15s
+
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+      - localhost:9093  # Replace with your Alertmanager's address if different
+
+rule_files:
+  - /etc/prometheus/rules/*.yml
+
+scrape_configs:
+  # Your scrape configs go here
