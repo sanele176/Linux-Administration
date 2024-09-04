@@ -1,0 +1,1 @@
+ALERTS{alertname="HighDiskUsage",alertstate="firing",instance=~"$instance"} * on(instance) group_left(nodename) node_uname_info
