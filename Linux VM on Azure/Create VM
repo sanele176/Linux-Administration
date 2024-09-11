@@ -1,0 +1,32 @@
+
+
+az vm create \
+  --name support-web-vm01 \
+  --image Canonical:UbuntuServer:16.04-LTS:latest \
+  --size Standard_DS1_v2 \
+  --admin-username azureuser \
+  --generate-ssh-keys
+
+The VM's name is support-web-vm01.
+Its size is Standard_DS1_v2.
+The admin username is azureuser. In practice, this name can be whatever you like.
+The --generate-ssh-keys argument generates an SSH keypair for you, allowing you to connect to your VM over SSH.
+
+Add an empty data disk to your VM
+az vm disk attach \
+  --vm-name support-web-vm01 \
+  --name uploadDataDisk1 \
+  --size-gb 64 \
+  --sku Premium_LRS \
+  --new
+
+Initialize and format your data disk
+
+Run az vm show to get your VM's public IP address and save the IP address as a Bash variable.
+
+ipaddress=$(az vm show \
+  --name support-web-vm01 \
+  --show-details \
+  --query [publicIps] \
+  --output tsv)
+
