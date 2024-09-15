@@ -1,0 +1,3 @@
+On /dev/vdb, we have an XFS filesystem.Use the correct command to check this filesystem for errors and save the output in /home/bob/fscheck file.
+
+  sudo xfs_repair -n /dev/vdb > /home/bob/fscheck 2>&1
