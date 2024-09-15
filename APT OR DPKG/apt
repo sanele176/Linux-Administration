@@ -1,0 +1,15 @@
+List the files that belong to the coreutils package. Filter out the entries that were installed in the /bin directory. 
+You will see one file in this /bin directory with a name that begins with the letter "u". 
+Identify the complete path of this file in the /bin directory and save it in name.txt file under /home/bob?
+
+-  dpkg --listfiles coreutils | grep ^/bin > /home/bob/name.txt
+
+Uninstall the package ziptool and its dependency package(s) from the system.
+- sudo apt autoremove -y ziptool
+
+Configure the package manager with this extra repository:
+- vi /etc/apt/sources.list
+ And add the repo
+deb http://us.archive.ubuntu.com/ubuntu/ focal main
+- sudo apt update
+
