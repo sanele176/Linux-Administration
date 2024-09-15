@@ -1,0 +1,22 @@
+In the tmux directory, you will find the source code for the tmux application. 
+All compilation tools and libraries were already installed for you.
+
+- Build the application (compile source code).
+- Install it on the system.
+
+cd tmux
+Run autogen.sh to generate the necessary build files
+
+sudo ./autogen.sh
+Configure the build
+
+sudo ./configure
+Compile the source code
+
+sudo make
+Install the application
+
+sudo make install
+
+Now access it by running command
+tmux
