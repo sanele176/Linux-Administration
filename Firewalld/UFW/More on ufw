@@ -1,0 +1,25 @@
+Set up a firewall rule to allow incoming traffic to this machine on port 80.
+- ufw allow 80
+
+Set up a firewall rule to allow incoming traffic to this machine on port 53, through the TCP protocol.
+- ufw allow 53/tcp
+
+Set up a firewall rule to deny incoming traffic to this machine on port 443, through the TCP protocol.
+- ufw deny 443/tcp
+
+Delete a firewall rule denying incoming traffic to this machine on port 443, through the TCP protocol (That is created in previous step).
+- ufw delete deny 443/tcp
+
+Allow all traffic that is coming from the following IP address 207.45.232.181.
+- ufw allow from 207.45.232.181
+
+Allow all traffic coming from any IP in this network range: 10.11.12.0 to 10.11.12.255 (i.e., 10.11.12.0/24). Add the required rule.
+- ufw allow from 10.11.12.0/24
+
+There's a firewall rule that denies any traffic coming from the 10.0.0.19 IP address. 
+But this rule is in an incorrect spot (after an allow rule for the 10.0.0.0/24 range). 
+So traffic is never denied because the rule is never matched. Correct this mistake.
+
+- ufw status numbered
+- ufw delete deny from 10.0.0.19
+- ufw insert 1 deny from 10.0.0.19
