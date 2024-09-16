@@ -1,0 +1,3 @@
+ufw allow 22
+ufw enable
+ufw status numbered
