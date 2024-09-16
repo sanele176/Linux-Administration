@@ -1,0 +1,25 @@
+Print our current user's (bob) environment and save the output in the /home/bob/env file.
+You can use the redirection to save your command's output in a file: [your-command] > /home/bob/env
+
+- env > /home/bob/env
+
+Add an environment variable for user bob.
+The variable name should be MYVAR and its value should be TRUE
+
+vi ~/.bashrc
+add the variable at the end of the file:
+export MYVAR=TRUE
+
+save the file and run:
+source ~/.bashrc
+
+- Make sure that this command gets executed for any user that logs in to the system:
+ echo Welcome to our server!
+
+sudo vi /etc/profile.d/welcome.sh
+echo "Welcome to our server!"
+
+- Add the value of $PATH variable for user bob to include $HOME/.config/bin location in the path.
+vi /home/bob/.bashrc
+PATH="$HOME/.local/bin:$HOME/bin:$HOME/.config/bin:$PATH"
+source ~/.bashrc
