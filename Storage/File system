@@ -1,0 +1,28 @@
+Create an xfs filesystem with the label "DataDisk" on /dev/vdb
+- mkfs.xfs -L "DataDisk"  /dev/vdb
+
+Create an ext4 filesystem with 2048 inodes on /dev/vdc.
+- mkfs.ext4 -N 2048 /dev/vdc
+
+Configure the system to automatically mount /dev/vdc when it boots up. This partition has an ext4 filesystem on it. 
+It should mount the filesystem to the /test directory. This directory does not exist. Make sure you create it first.
+Also, make sure this filesystem is checked on boot.
+For now, you do not need to reboot the system after making the required changes.
+
+- mkdir /test
+- vi /etc/fstab
+  /dev/vdc  /test  ext4  defaults  0 2
+- mount -a (to test)
+
+Configure the system to automatically use /dev/vdb as swap when it boots up.
+For now, you do not need to reboot the system after making the required changes.
+
+- vi /etc/fstab
+ /dev/vdb  none  swap  defaults 0 0
+- mount -a
+- swapon /dev/vdb
+
+/dev/vdb1 is currently mounted with the rooption, so it's read-only. Remount it with the rw option so it becomes read-write
+- mount -o remount,rw /dev/vdb1 /mnt
+
+
