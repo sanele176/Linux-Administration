@@ -1,0 +1,33 @@
+An NFS server is already running and active in the system. Configure the existing NFS server to share the /home directory in read-only mode. 
+Allow access to any client within the CIDR range 10.0.0.0/24.
+Note: Make sure you reexport the configuration file using exportfs -r
+
+- vi /etc/exports
+ /home 10.0.0.0/24(ro)
+- exportfs -r
+- exportfs -v
+
+For this step, manually mount the NFS share with the following properties:
+The IP of the NFS server is 127.0.0.1.
+The remote directory you should mount from 127.0.0.1 is /home.
+Mount this share in the local directory /mnt
+
+- mount 127.0.0.1:/home /mnt
+
+For this step, configure the system to automatically mount an NFS share when it boots up:
+The share is on the server with the IP address 127.0.0.1.
+The remote directory you should mount from the NFS server is /home
+Mount it in the local directory /mnt
+Use defaults in the mount options
+
+- vi /etc/fstab
+127.0.0.1:/home   /mnt  nfs  defaults  0 0
+
+Share the /home directory with any client with an IP address in the CIDR range: 192.0.0.0/24. Make this share read-only.
+Share the same /home directory, but this time, with any client with the exact IP address 127.0.0.10. Make this share read-write. 
+Besides the read-write option, also enable the no_root_squash option.
+
+- vi /etc/exports
+/home 192.0.0.0/24(ro) 127.0.0.10(rw,no_root_squash)
+- exportfs -r
+- exportfs -v
