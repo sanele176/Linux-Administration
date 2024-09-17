@@ -1,0 +1,21 @@
+Edit the config file of the Squid proxy daemon. Modify it to deny access to the IP addresses defined in the ACL called localnet.
+
+Solution:
+sudo vi /etc/squid/squid.conf
+And change the line http_access allow localnet to http_access deny localnet
+
+Edit the configuration of the Squid proxy daemon. Add a src type acl and name it vpn. 
+The IP you should use in this acl is 203.0.110.5. 
+Now add a new rule that tells the proxy server to allow access to the acl named vpn.
+
+Solution: 
+Edit the /etc/squid/squid.conf file:
+
+sudo vi /etc/squid/squid.conf
+and Save the below changes in it:
+Add this line
+
+acl vpn src 203.0.110.5
+Add the below line in the same file before the http_access deny all line:
+
+http_access allow vpn
