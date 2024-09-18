@@ -13,3 +13,22 @@ getfacl  /etc/hosts
 
 4. User ryan should be granted read only permission on the file.
 - setfacl -m ryan:r-- /etc/hosts
+
+
+In your home directory, you will find a file named specialfile. 
+Add an ACL permission to this file so that the user called john can read and write to it
+
+- setfacl -m u:john:rw specialfile
+
+From the file called specialfile, remove the ACL permissions for the user called john
+- setfacl --remove user:john specialfile
+
+To the file called specialfile, add an ACL permission for the group called mail. The mail group should get permissions to read and execute this file
+-setfacl --modify group:mail:r-x specialfile
+
+
+In your home directory, you will find a directory called collection. 
+Use the setfacl command recursively, so that ACL entries are modified on the directory itself but also all the files and subdirectories it may contain. 
+The ACL permissions should allow the user called john to read, write and execute all entries within this directory.
+
+- setfacl -R --modify user:john:rwx collection
