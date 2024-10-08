@@ -1,0 +1,12 @@
+- Get installation script from;
+https://github.com/BeyondTrust/pbis-open/releases
+pbis-open-9.1.0.551.linux.s390x.rpm.sh
+- yum install libnsl.x86_64  if not installed
+- add execution perm on script then run it
+- /opt/pbis/bin/domainjoin-cli join homelab.local Administrator
+- /opt/pbis/bin/config --dump  (check configs)
+- /opt/pbis/bin/config LoginShellTemplate /bin/bash (login shell)
+- /opt/pbis/bin/config UserDomainPrefix homelab.local
+- /opt/pbis/bin/config AssumeDefaultDomain true
+- /opt/pbis/bin/config requiremembershipof "homelab\\linux"  (AD group to permit users from)
+- 
