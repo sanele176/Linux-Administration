@@ -21,40 +21,16 @@ Solution
 6. Edit Nginx file and do the below changes ( Refer video for more details )
     vi /etc/nginx/nginx.conf
     - change port
-    - add reverse proxy setting
-     
-
-
-
-
-
-
-
-
-
-
-
-
+    - add reverse proxy setting, below include clause
+             location / {
+           proxy_pass http://localhost:5004;
+        }
 
 7.  Copy the index.html file from /tmp to /var/www/html/
 
         cp /tmp/index.html /var/www/html/
 
-
-
-
-
-
-
 8. Start the httpd and nginx services 
-
-
-
-
-
-
-
-
 
 9. validate the task by below commands 
 
