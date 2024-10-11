@@ -14,3 +14,6 @@ Add multiple AD Groups
 - /opt/pbis/bin/config require homelab\\sssdl1 homelab\\linux
 Check AD users
 - /opt/pbis/bin/enum-users
+Grant sudo
+- vi /etc/sudoers
+ %homelab\\sssd_l1  ALL=(ALL)  NOPASSWD:ALL
