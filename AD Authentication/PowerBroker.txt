@@ -9,4 +9,8 @@ pbis-open-9.1.0.551.linux.s390x.rpm.sh
 - /opt/pbis/bin/config UserDomainPrefix homelab.local
 - /opt/pbis/bin/config AssumeDefaultDomain true
 - /opt/pbis/bin/config requiremembershipof "homelab\\linux"  (AD group to permit users from)
-- 
+
+Add multiple AD Groups
+- /opt/pbis/bin/config require homelab\\sssdl1 homelab\\linux
+Check AD users
+- /opt/pbis/bin/enum-users
