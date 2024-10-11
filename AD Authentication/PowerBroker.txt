@@ -17,3 +17,5 @@ Check AD users
 Grant sudo
 - vi /etc/sudoers
  %homelab\\sssd_l1  ALL=(ALL)  NOPASSWD:ALL
+Check DC and pbis status
+- pbis status
