@@ -1,0 +1,227 @@
+#!/bin/bash
+
+# Thresholds
+cpu_threshold=80
+mem_threshold=80
+disk_threshold=80
+
+# Get CPU usage
+cpu_usage=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print 100 - $1}')
+cpu_color=$(if (( $(echo "$cpu_usage > $cpu_threshold" | bc -l) )); then echo "red"; else echo "green"; fi)
+
+# Get Memory usage
+mem_info=$(free | grep Mem)
+mem_total=$(echo $mem_info | awk '{print $2}')
+mem_used=$(echo $mem_info | awk '{print $3}')
+mem_usage=$(echo "scale=2; ($mem_used/$mem_total)*100" | bc)
+mem_color=$(if (( $(echo "$mem_usage > $mem_threshold" | bc -l) )); then echo "red"; else echo "green"; fi)
+
+# Get Disk usage
+disk_usage=$(df -h | grep '^/dev/' | awk '{ print $5 " " $1 }' | sort -n | tail -1 | awk '{print $1}' | sed 's/%//')
+disk_color=$(if (( disk_usage > disk_threshold )); then echo "red"; else echo "green"; fi)
+
+# Prepare HTML report
+email_subject="Daily Health Check Report"
+email_to="your_email@domain.com"
+email_from="server_health@domain.com"
+
+html_body="
+<html>
+  <head>
+    <style>
+      table { width: 50%; border-collapse: collapse; }
+      th, td { padding: 10px; text-align: left; }
+      th { background-color: #f2f2f2; }
+      .green { background-color: #d4edda; }
+      .red { background-color: #f8d7da; }
+    </style>
+  </head>
+  <body>
+    <h2>Daily Health Check Report</h2>
+    <table border=\"1\">
+      <tr>
+        <th>Metric</th>
+        <th>Usage</th>
+        <th>Status</th>
+      </tr>
+      <tr>
+        <td>CPU Usage</td>
+        <td>$cpu_usage%</td>
+        <td class=\"$cpu_color\">$cpu_color</td>
+      </tr>
+      <tr>
+        <td>Memory Usage</td>
+        <td>$mem_usage%</td>
+        <td class=\"$mem_color\">$mem_color</td>
+      </tr>
+      <tr>
+        <td>Disk Usage</td>
+        <td>$disk_usage%</td>
+        <td class=\"$disk_color\">$disk_color</td>
+      </tr>
+    </table>
+  </body>
+</html>
+"
+
+# Send email
+(
+echo "From: $email_from"
+echo "To: $email_to"
+echo "Subject: $email_subject"
+echo "Content-Type: text/html"
+echo ""
+echo "$html_body"
+) | /usr/sbin/sendmail -t
+
+
+**********************************multi server*************************************
+#!/bin/bash
+
+# Define variables
+server_list="/path/to/server_list.txt"  # List of servers
+remote_script="/path/to/remote_health_check.sh"  # Path to health check script on remote servers
+report_dir="/path/to/directory"  # Directory to store reports
+
+# Loop through server list and execute health check remotely
+while read server; do
+  echo "Running health check on $server..."
+
+  # Execute health check on remote server and copy the result back
+  ssh user@$server "bash $remote_script"
+  
+  # Copy the result file from the remote server to the central server
+  scp user@$server:/tmp/health_check_$(hostname).txt $report_dir/health_check_$server.txt
+
+done < $server_list
+
+# Consolidate all reports into one email
+# (Add the same email consolidation part from the previous example)
+email_subject="Consolidated Daily Health Check Report"
+email_to="your_email@domain.com"
+email_from="server_health@domain.com"
+
+html_body="
+<html>
+  <head>
+    <style>
+      table { width: 100%; border-collapse: collapse; }
+      th, td { padding: 10px; text-align: left; }
+      th { background-color: #f2f2f2; }
+      .green { background-color: #d4edda; }
+      .red { background-color: #f8d7da; }
+    </style>
+  </head>
+  <body>
+    <h2>Consolidated Daily Health Check Report</h2>
+    <table border=\"1\">
+      <tr>
+        <th>Server</th>
+        <th>CPU Usage</th>
+        <th>CPU Status</th>
+        <th>Memory Usage</th>
+        <th>Memory Status</th>
+        <th>Disk Usage</th>
+        <th>Disk Status</th>
+      </tr>
+"
+
+# Add reports from all servers
+for file in $report_dir/health_check_*.txt; do
+  html_body+=$(cat "$file")
+done
+
+html_body+="
+    </table>
+  </body>
+</html>
+"
+
+# Send the email
+(
+echo "From: $email_from"
+echo "To: $email_to"
+echo "Subject: $email_subject"
+echo "Content-Type: text/html"
+echo ""
+echo "$html_body"
+) | /usr/sbin/sendmail -t
+
+# Clean up
+rm $report_dir/health_check_*.txt
+
+
+**********************************each server sends**************************************
+#!/bin/bash
+
+# Define variables
+server_list="/path/to/server_list.txt"  # List of servers
+remote_script="/path/to/remote_health_check.sh"  # Path to health check script on remote servers
+report_dir="/path/to/directory"  # Directory to store reports
+
+# Loop through server list and execute health check remotely
+while read server; do
+  echo "Running health check on $server..."
+
+  # Execute health check on remote server and copy the result back
+  ssh user@$server "bash $remote_script"
+  
+  # Copy the result file from the remote server to the central server
+  scp user@$server:/tmp/health_check_$(hostname).txt $report_dir/health_check_$server.txt
+
+done < $server_list
+
+# Consolidate all reports into one email
+# (Add the same email consolidation part from the previous example)
+email_subject="Consolidated Daily Health Check Report"
+email_to="your_email@domain.com"
+email_from="server_health@domain.com"
+
+html_body="
+<html>
+  <head>
+    <style>
+      table { width: 100%; border-collapse: collapse; }
+      th, td { padding: 10px; text-align: left; }
+      th { background-color: #f2f2f2; }
+      .green { background-color: #d4edda; }
+      .red { background-color: #f8d7da; }
+    </style>
+  </head>
+  <body>
+    <h2>Consolidated Daily Health Check Report</h2>
+    <table border=\"1\">
+      <tr>
+        <th>Server</th>
+        <th>CPU Usage</th>
+        <th>CPU Status</th>
+        <th>Memory Usage</th>
+        <th>Memory Status</th>
+        <th>Disk Usage</th>
+        <th>Disk Status</th>
+      </tr>
+"
+
+# Add reports from all servers
+for file in $report_dir/health_check_*.txt; do
+  html_body+=$(cat "$file")
+done
+
+html_body+="
+    </table>
+  </body>
+</html>
+"
+
+# Send the email
+(
+echo "From: $email_from"
+echo "To: $email_to"
+echo "Subject: $email_subject"
+echo "Content-Type: text/html"
+echo ""
+echo "$html_body"
+) | /usr/sbin/sendmail -t
+
+# Clean up
+rm $report_dir/health_check_*.txt
