@@ -1,0 +1,15 @@
+- sudo yum install sendmail
+- vi /etc/mail/sendmail.mc
+- yum install sendmail-cf (used to regenerate config file)
+- look for below line and define smtp host
+  define(`SMART_HOST', `smtp.gmail.com')dnl
+- ensure to set FQDN for server
+- vi /etc/hostname
+  <server_ip_address>    <FQDN>   <hostname>
+- add below to end of /etc/mail/sendmail.mc
+  MAILER(local)dnl
+  MAILER(smtp)dnl
+- sudo m4 /etc/mail/sendmail.mc > /etc/mail/sendmail.cf  (regenerate mail config file)
+- systemctl restart sendmail
+- echo "This is a test email" | mail -s "Test Email" recipient@example.com
+
