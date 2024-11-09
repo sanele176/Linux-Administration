@@ -1,0 +1,7 @@
+- Login to nagios host on OS level
+- mysql
+- SELECT * FROM nagiosxi.xi_options WHERE name LIKE "url";
+- update url
+  UPDATE nagiosxi.xi_options
+  SET value = 'http://34.145.165.250/nagiosxi/'
+  WHERE name = 'url';
