@@ -1,0 +1,15 @@
+- curl -LsS -O https://downloads.mariadb.com/MariaDB/mariadb_repo_setup
+- sudo bash mariadb_repo_setup --mariadb-server-version=10.8
+- sudo yum install MariaDB-server MariaDB-client MariaDB-backup
+
+troubleshoot error : zabbix log : connection to database 'zabbix' failed: [2002] Can't connect to local server through socket '/var/lib/mysql/mysql.sock' (13)
+- ls -l /var/lib/mysql/mysql.sock
+- sudo chown mysql:mysql /var/lib/mysql/mysql.sock
+- sudo chmod 777 /var/lib/mysql/mysql.sock
+- sudo chown -R mysql:mysql /var/lib/mysql
+- sudo chmod -R 755 /var/lib/mysql
+- sudo setenforce 0
+- sudo systemctl restart mysqld
+- sudo systemctl restart zabbix-server
+
+
