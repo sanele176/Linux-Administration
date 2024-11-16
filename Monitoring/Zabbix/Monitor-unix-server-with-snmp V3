@@ -1,0 +1,16 @@
+- Ensure snmp is installed
+  yum install snmp -y
+- Also install snmp utils
+  yum -y install net-snmp net-snmp-utils
+- create snmp v3 user
+  net-snmp-create-v3-user -ro -A password -a SHA -X password -x AES username
+- Configure snmp, add the created user and create a view
+  vi /etc/snmp/snmpd.conf
+  view    systemview    included   .1.3.6.1.2.1.1
+  view    systemview    included   .1.3.6.1.2.1.25.1.1
+
+  agentAddress udp:161,udp6:[::1]:161
+  rouser mymonitor authpriv -V systemonly
+- restart snmp
+  systemctl restart snmp
+- Also allow port 161 if server firewall is running
