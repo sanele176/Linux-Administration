@@ -3,8 +3,8 @@
 # Define variables
 report_dir="/home/mancobd_sa/Automation"  # Adjust this path as necessary
 email_subject="Unix Server Health Report"
-email_to="mancoba.dlamini1@mtn.com"
-email_from="automation.sz@mtn.com"
+email_to="testuser@test.com"
+email_from="testuser@test.com"
 
 # Start HTML body
 html_body="
