@@ -1,0 +1,92 @@
+---
+- hosts:
+    - class_a
+    - class_b
+    - class_c
+  
+  gather_facts: yes
+  vars:
+    ansible_gather_subset:
+      - min  # Minimal facts
+      - distribution
+      - os_family
+  tasks:
+    - name: Gather server health information
+      block:
+        - name: Get server hostname
+          command: hostname
+          register: server_hostname
+          changed_when: false
+
+        - name: Get CPU usage for Linux
+          shell: top -bn1 | grep 'Cpu(s)' | sed 's/.*, *\([0-9.]*\)%* id.*/\1/' | awk '{print 100 - $1}'
+          register: linux_cpu_usage
+          when: ansible_system == 'Linux'
+          changed_when: false
+          failed_when: false
+
+        - name: Get CPU usage for Solaris
+          shell: mpstat 1 1 | tail -1 | awk '{print 100 - $NF}'
+          register: solaris_cpu_usage
+          when: ansible_system == 'SunOS'
+          changed_when: false
+          failed_when: false
+
+        - name: Get memory usage for Linux
+          shell: free | grep Mem | awk '{printf "%.1f", $3/$2 * 100.0}'
+          register: linux_memory_usage
+          when: ansible_system == 'Linux'
+          changed_when: false
+          failed_when: false
+
+        - name: Get memory usage for Solaris
+          shell: vmstat | tail -1 | awk '{printf "%.1f", (1 - $5/($3+$4+$5)) * 100}'
+          register: solaris_memory_usage
+          when: ansible_system == 'SunOS'
+          changed_when: false
+          failed_when: false
+
+        - name: Get disk usage for Linux
+          shell: df -h / | grep / | awk '{print $5}' | sed 's/%//'
+          register: linux_disk_usage
+          when: ansible_system == 'Linux'
+          changed_when: false
+          failed_when: false
+
+        - name: Get disk usage for Solaris
+          shell: df -h / | grep / | awk '{print $5}' | sed 's/%//'
+          register: solaris_disk_usage
+          when: ansible_system == 'SunOS'
+          changed_when: false
+          failed_when: false
+
+        - name: Prepare health report content for Linux
+          set_fact:
+            health_report: |
+              Host: {{ server_hostname.stdout }},
+              CPU Usage: {{ linux_cpu_usage.stdout | default('N/A') }}%,
+              Memory Usage: {{ linux_memory_usage.stdout | default('N/A') }}%,
+              Disk Usage: {{ linux_disk_usage.stdout | default('N/A') }}%
+          when: ansible_system == 'Linux'
+
+        - name: Prepare health report content for Solaris
+          set_fact:
+            health_report: |
+              Host: {{ server_hostname.stdout }},
+              CPU Usage: {{ solaris_cpu_usage.stdout | default('N/A') }}%,
+              Memory Usage: {{ solaris_memory_usage.stdout | default('N/A') }}%,
+              Disk Usage: {{ solaris_disk_usage.stdout | default('N/A') }}%
+          when: ansible_system == 'SunOS'
+
+        - name: Write server health information to a file
+          copy:
+            content: "{{ health_report }}"
+            dest: /tmp/server_health_report.txt
+            mode: '0644'
+
+    - name: Fetch health reports from all servers
+      fetch:
+        src: /tmp/server_health_report.txt
+        dest: "/home/mancobd_sa/Automation/{{ inventory_hostname }}_health_report.txt"
+        flat: yes
+      run_once: false
