@@ -9,6 +9,7 @@ pbis-open-9.1.0.551.linux.s390x.rpm.sh
 - /opt/pbis/bin/config UserDomainPrefix homelab.local
 - /opt/pbis/bin/config AssumeDefaultDomain true
 - /opt/pbis/bin/config requiremembershipof "homelab\\linux"  (AD group to permit users from)
+- /opt/pbis/bin/config Local_HomeDirTemplate "/home/%U"  (change home dir)
 
 Add multiple AD Groups
 - /opt/pbis/bin/config require homelab\\sssdl1 homelab\\linux
@@ -19,3 +20,8 @@ Grant sudo
  %homelab\\sssd_l1  ALL=(ALL)  NOPASSWD:ALL
 Check DC and pbis status
 - pbis status
+
+Troubleshooting
+- Error: Received error while querying lwsmd. [code 0x00000002]
+Disable or configure selinux policy
+
