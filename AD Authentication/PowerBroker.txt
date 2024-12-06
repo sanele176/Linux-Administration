@@ -17,11 +17,15 @@ Check AD users
 - /opt/pbis/bin/enum-users
 Grant sudo
 - vi /etc/sudoers
- %homelab\\sssd_l1  ALL=(ALL)  NOPASSWD:ALL
+ %homelab\\sssd_l1  ALL=(ALL)  NOPASSWD:ALL/opt/pbis/bin/ad-cache --delete <username>
+
 Check DC and pbis status
 - pbis status
 
 Troubleshooting
 - Error: Received error while querying lwsmd. [code 0x00000002]
 Disable or configure selinux policy
+- /opt/pbis/bin/ad-cache --delete-all (clear all cache)
+- /opt/pbis/bin/ad-cache --delete <username>
+- 
 
