@@ -13,3 +13,13 @@
 - systemctl restart sendmail
 - echo "This is a test email" | mail -s "Test Email" recipient@example.com
 
+Additionally install mailx in order to define a default sender or from address
+- sudo yum install -y mailx
+- sudo vi /etc/mail.rc (all users) for single user edit vi ~/.mailrc
+  set smtp=smtp://your-smtp-server:25
+  set from=your-email@example.com
+- Test
+echo "This is a test email body." | mailx -s "Test Email" -r sender@example.com recipient@example.com
+
+ 
+
