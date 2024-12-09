@@ -19,7 +19,10 @@ Additionally install mailx in order to define a default sender or from address
   set smtp=smtp://your-smtp-server:25
   set from=your-email@example.com
 - Test
-echo "This is a test email body." | mailx -s "Test Email" -r sender@example.com recipient@example.com
+  echo "This is a test email body." | mailx -s "Test Email" -r sender@example.com recipient@example.com
+
+- Mail log
+  tail /var/log/maillog
 
  
 
