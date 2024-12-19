@@ -20,6 +20,9 @@ Steps
           server 172.16.238.12:8084;
 }
 
+
+- Add below to /etc/nginx/nginx.conf (on server section)
+
 location / {
         proxy_pass  http://backend;
     }
