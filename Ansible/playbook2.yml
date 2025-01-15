@@ -3,6 +3,8 @@
     - class_a
     - class_b
     - class_c
+
+  strategy: free
   
   gather_facts: yes
   vars:
@@ -17,6 +19,24 @@
           command: hostname
           register: server_hostname
           changed_when: false
+
+        - name: Get server IP address
+          set_fact:
+            server_ip: "{{ ansible_host }}"
+          changed_when: false
+
+        - name: Get server uptime for Linux
+          command: uptime
+          register: linux_uptime
+          when: ansible_system == 'Linux'
+          changed_when: false
+
+        - name: Get server uptime for Solaris
+          command: uptime
+          register: solaris_uptime
+          when: ansible_system == 'SunOS'
+          changed_when: false
+      
 
         - name: Get CPU usage for Linux
           shell: top -bn1 | grep 'Cpu(s)' | sed 's/.*, *\([0-9.]*\)%* id.*/\1/' | awk '{print 100 - $1}'
@@ -64,6 +84,8 @@
           set_fact:
             health_report: |
               Host: {{ server_hostname.stdout }},
+              IP Address: {{ server_ip }},
+              Uptime: {{ linux_uptime.stdout | default('N/A') }},          
               CPU Usage: {{ linux_cpu_usage.stdout | default('N/A') }}%,
               Memory Usage: {{ linux_memory_usage.stdout | default('N/A') }}%,
               Disk Usage: {{ linux_disk_usage.stdout | default('N/A') }}%
@@ -73,6 +95,8 @@
           set_fact:
             health_report: |
               Host: {{ server_hostname.stdout }},
+              IP Address: {{ server_ip }}, 
+              Uptime: {{ solaris_uptime.stdout | default('N/A') }},             
               CPU Usage: {{ solaris_cpu_usage.stdout | default('N/A') }}%,
               Memory Usage: {{ solaris_memory_usage.stdout | default('N/A') }}%,
               Disk Usage: {{ solaris_disk_usage.stdout | default('N/A') }}%
