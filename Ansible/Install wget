@@ -1,0 +1,21 @@
+Create an inventory file /home/thor/playbook/inventory on jump host and add all app servers in it.
+Create an Ansible playbook /home/thor/playbook/playbook.yml to install wget package on all  app servers using Ansible yum module.
+Make sure user thor should be able to run the playbook on jump host.
+Note: Validation will try to run playbook using command ansible-playbook -i inventory playbook.yml 
+so please make sure playbook works this way, without passing any extra arguments.
+
+Inventory
+[apps]
+stapp01 ansible_ssh_user=tony ansible_ssh_pass=Ir0nM@n ansible_sudo_pass=Ir0nM@n
+stapp02 ansible_ssh_user=steve ansible_ssh_pass=Am3ric@ ansible_sudo_pass=Am3ric@
+stapp03 ansible_ssh_user=banner ansible_ssh_pass=BigGr33n ansible_sudo_pass=BigGr33n
+
+Playbook
+- hosts: apps
+  gather_facts: false
+  become: true
+
+  tasks:
+    - yum:
+        name: wget
+        state: present
