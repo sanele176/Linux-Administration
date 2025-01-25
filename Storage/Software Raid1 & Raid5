@@ -55,6 +55,17 @@ Raid 5 - Striping with Parity (minimum 3 disk)
 - mdadm --detail /dev/md1
 - mdadm --detail --scan >> /etc/mdadm.conf
 
+Simulate a fail
+- sudo mdadm --fail /dev/md1 /dev/sdf
+- sudo mdadm --remove /dev/md1 /dev/sdf
+- sudo mdadm --add /dev/md0 /dev/sdf (re-add it and raid will auto rebuild
+
+Grow or add additional disk
+- sudo mdadm --add /dev/md1 /dev/sdg
+- sudo mdadm --grow /dev/md1 --raid-devices=4
+- sudo resize2fs /dev/md1
+- cat /proc/mdstat
+
 Advantages:
 
 Fault Tolerance:
