@@ -88,5 +88,14 @@ Can only tolerate one disk failure. If a second disk fails during a rebuild, all
 Rebuild Time:
 Rebuilding the array after a disk failure can take a long time
 
+Raid Common issues
+************************************************************************
+- raids being dropped at boot (error devices can not be found)
+  - sudo mdadm --examine --scan
+  - sudo mdadm --assemble --scan
+  error : Duplicate MD device names in conf file were found : due to running save command multiple times
+  - fix : manually delete duplicate on vi /etc/mdadm.conf
+  - then rebuild raid : sudo mdadm --assemble --scan
+
 
 
