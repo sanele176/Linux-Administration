@@ -1,3 +1,45 @@
+Install and configure NFS in Centos
+- Install the nfs-utils package which provides the necessary NFS components.
+  sudo dnf install nfs-utils -y
+
+- Create a directory to share. For example, we’ll use /mnt/nfs_share:
+  sudo mkdir -p /mnt/nfs_share
+
+- Set proper permissions. You can adjust these based on your security needs. For a simple, open share:
+  sudo chmod 777 /mnt/nfs_share
+
+- Configure NFS Exports
+  Edit the /etc/exports file to define which directories to share and what access options to allow.
+  sudo vi /etc/exports
+  /mnt/nfs_share  *(rw,sync,no_root_squash)
+Explanation of Options:
+rw: Allow read and write access.
+sync: Write changes to disk before replying.
+no_root_squash: Preserve root privileges for clients (use with caution)
+
+- Export the Shares
+Make the changes take effect by exporting the directories:
+sudo exportfs -rav
+-r: Re-export all directories.
+-a: Export all directories listed in /etc/exports.
+-v: Verbose mode to show details.
+
+To verify, run:
+sudo exportfs -v
+
+- Configure Firewall Settings
+  Allow NFS traffic through the firewall. Run the following commands:
+  sudo firewall-cmd --permanent --add-service=nfs
+  sudo firewall-cmd --reload
+
+- Start and Enable NFS Services
+  Enable and start the NFS server service:
+  sudo systemctl enable --now nfs-server
+
+- Mount on client side
+  sudo mount -t nfs server_ip:/mnt/nfs_share /mnt/nfs_client
+*************************************************************************************************************************************************
+
 An NFS server is already running and active in the system. Configure the existing NFS server to share the /home directory in read-only mode. 
 Allow access to any client within the CIDR range 10.0.0.0/24.
 Note: Make sure you reexport the configuration file using exportfs -r
