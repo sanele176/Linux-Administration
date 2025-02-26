@@ -1,3 +1,7 @@
+![Alternative Text](./linux mind map.png "Optional Title")
+
+
+
 # Linux-Administration - hands on mini project and tasks
 - Users and Groups
 - Storage management
