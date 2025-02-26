@@ -1,4 +1,4 @@
-![Alternative Text](./linux mind map.png "Optional Title")
+![Alternative Text](./mindmap.png "Optional Title")
 
 
 
