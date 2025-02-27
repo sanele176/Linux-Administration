@@ -1,0 +1,47 @@
+Many security audits and checklists like the ones supplied by CIS or DISA STIG require locking user accounts after a 
+number of unsuccessful login attempts. In Linux, this is usually achieved by using faillock / pam_faillock.so.
+
+Using PAM
+PAM (Pluggable Authentication Modules) is the flexible framework in modern Linux to customize the authentication 
+and login process flexibly. This is why faillock is attached there and was written as a library module for PAM.
+
+add the below 3 lines to /etc/pam.d/password-auth or /etc/pam.d/system-auth : ensure correct order
+
+- auth        required      pam_faillock.so preauth silent audit 
+- auth        [default=die] pam_faillock.so authfail audit
+- account     required      pam_faillock.so
+
+Sample file
+# Loading the PAM environment
+auth        required      pam_env.so
+# Faillock checks if there are too many failed attempts, but does not tell, just fails.
+# This leads to aborting the authentication process.
+auth        required      pam_faillock.so preauth silent audit 
+# The regular Unix passwd/shadow login
+auth        sufficient    pam_unix.so try_first_pass
+# Faillock counts the failed attempt (pam_unix failed)
+auth        [default=die] pam_faillock.so authfail audit
+# Bottom of the queue: Deny login
+auth        required      pam_deny.so
+
+# Unix account check
+account     required      pam_unix.so
+# Faillock check for account fail count
+account     required      pam_faillock.so
+
+- vi /etc/security/faillock.conf
+ deny = 5
+ unlock_time = 900
+
+- restart sshd : systemctl restart sshd
+
+- To check if user is locked or not
+faillock --user testuser 
+
+- To reset or unlock user
+faillock --user testuser --reset
+
+- To view logs
+tail -1000f /var/log/secure
+
+
