@@ -1,0 +1,4 @@
+A systems administrator requires that all files that are created by the user named web have read-only permissions by the owner. 
+Which of the following commands will satisfy this requirement?
+
+echo "umask 377" >> /home/web/.bashrc
