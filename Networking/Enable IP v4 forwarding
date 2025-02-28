@@ -1,0 +1,8 @@
+To enable ipv4 forwarding run the below
+
+syctl net.ipv4.ip_forward=1
+syctl -p (to save)
+
+or
+
+echo "1" /proc/sys/net/ipv4/ip_forward
