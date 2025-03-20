@@ -1,0 +1,7 @@
+Find with two or more search parameters
+
+AND Operator
+- find / -type f -name *.txt -size +1G
+
+Or Operator
+- find / -type f -name *.txt -o -size +1G
