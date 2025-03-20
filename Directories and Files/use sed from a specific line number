@@ -1,0 +1,3 @@
+Change all values enabled to disabled in the /home/bob/values.conf config file from line number 500 to 2000
+
+- sed -i '500,2000s/enabled/disabled/g' /home/bob/values.conf
