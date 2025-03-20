@@ -1,0 +1,2 @@
+Find file greater than 1 G
+- find / -type f -size 1G
