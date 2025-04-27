@@ -89,7 +89,13 @@ Paste the following config:
 
 input {
   file {
-    path => "/var/log/messages"
+    path => [
+      "/var/log/messages",
+      "/var/log/secure",
+      "/var/log/maillog",
+      "/var/log/cron",
+      "/var/log/boot.log"
+    ]
     start_position => "beginning"
     sincedb_path => "/dev/null"
   }
