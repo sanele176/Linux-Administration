@@ -1,0 +1,168 @@
+ELK Stack Log Monitoring on CentOS 8
+
+A complete guide to installing, configuring, and running an ELK Stack (Elasticsearch, Logstash, Kibana) 
+environment for real-time log monitoring, built from scratch on a CentOS 8 server.
+
+Project Overview
+
+This project sets up a full log monitoring system using only open-source tools, 
+without relying on Splunk or other commercial platforms.
+
+The stack components:
+
+- Elasticsearch: Stores, indexes, and searches logs.
+- Logstash: Collects, parses, and sends log data into Elasticsearch.
+- Kibana: Visualizes logs and metrics via dashboards.
+
+🛠 Setup Environment
+Server:
+OS: CentOS 9 / Rocky Linux 8
+CPU: 2 cores minimum
+RAM: 4GB recommended (2GB minimum)
+Disk: 30GB+
+Network:
+Accessed Kibana on HTTP port 5601
+Elasticsearch runs on port 9200
+
+Installation Guide
+1. Update and Prepare System
+
+sudo yum update -y
+sudo yum install wget curl nano -y
+sudo yum install java-11-openjdk-devel -y
+
+2. Install Elasticsearch
+sudo rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
+
+cat <<EOF | sudo tee /etc/yum.repos.d/elasticsearch.repo
+[elasticsearch]
+name=Elasticsearch repository
+baseurl=https://artifacts.elastic.co/packages/7.x/yum
+gpgcheck=1
+gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
+enabled=1
+autorefresh=1
+type=rpm-md
+EOF
+
+sudo yum install elasticsearch -y
+sudo systemctl enable elasticsearch
+sudo systemctl start elasticsearch
+
+Test Elasticsearch:
+
+curl http://localhost:9200
+
+3. Install Kibana
+
+sudo yum install kibana -y
+sudo systemctl enable kibana
+sudo systemctl start kibana
+
+Configure Kibana to listen on all interfaces:
+
+sudo nano /etc/kibana/kibana.yml
+
+Change:
+
+server.host: "0.0.0.0"
+elasticsearch.hosts: ["http://localhost:9200"]
+
+Restart Kibana:
+
+sudo systemctl restart kibana
+
+Access Kibana:
+
+http://<your-server-ip>:5601
+
+4. Install Logstash
+
+sudo yum install logstash -y
+sudo systemctl enable logstash
+
+Create basic Logstash pipeline:
+
+sudo nano /etc/logstash/conf.d/simple.conf
+
+Paste the following config:
+
+input {
+  file {
+    path => "/var/log/messages"
+    start_position => "beginning"
+    sincedb_path => "/dev/null"
+  }
+}
+
+output {
+  elasticsearch {
+    hosts => ["http://localhost:9200"]
+    index => "logstash-%{+YYYY.MM.dd}"
+  }
+}
+
+Restart Logstash:
+
+sudo systemctl restart logstash
+
+Fix permissions (important!):
+
+sudo chmod +r /var/log/messages
+
+Monitor Logstash logs:
+
+sudo journalctl -u logstash -f
+
+🎯 What Each Component Does
+
+Component
+
+Purpose
+
+Elasticsearch
+
+Central database that stores all indexed logs and supports full-text search.
+
+Logstash
+
+Collects and parses logs from servers, then forwards them into Elasticsearch.
+
+Kibana
+
+Provides a web-based dashboard for visualizing logs and building reports.
+
+📈 How to View Logs in Kibana
+
+Open your browser:
+
+http://<your-server-ip>:5601
+
+Go to Stack Management > Index Patterns (or "Data Views").
+
+Create a new pattern:
+
+Index pattern: logstash-*
+
+Timestamp field: @timestamp
+
+Go to Discover and select your index.
+
+Expand the time range (top-right) to "Last 7 days" or "Last 24 hours".
+
+Logs will start appearing!
+
+🧪 Testing Logs
+
+Generate a test log manually:
+
+echo "This is a test log $(date)" | sudo tee -a /var/log/messages
+
+Wait a few seconds, then refresh Kibana Discover view to see the new log entry.
+
+📋 Final Notes
+
+Always make sure Logstash has permission to read log files.
+Elasticsearch must be healthy for Kibana and Logstash to work properly.
+You can add Beats (Filebeat, Metricbeat) later to collect metrics and logs from remote servers.
+For production, consider setting up SSL/TLS, authentication, and backup strategies.
