@@ -1,0 +1,77 @@
+To integrate Active Directory (AD) authentication on Linux using SSSD (System Security Services Daemon), follow this step-by-step guide. 
+This allows Linux users to authenticate against AD without creating local accounts.
+
+✅ Overview
+SSSD connects your Linux system to AD, allowing users to:
+
+Log in with domain credentials.
+
+Access file systems with appropriate permissions.
+
+Use Kerberos/GSSAPI for authentication (if enabled).
+
+🧰 Requirements
+A Linux system (e.g., RHEL, CentOS, Rocky Linux, Ubuntu).
+
+AD domain (e.g., corp.example.com) reachable from the Linux machine.
+
+Proper DNS resolution (ensure ping domain.com works).
+
+An AD account with permissions to join the domain (typically a domain join account).
+
+📦 Step 1: Install Required Packages
+On RHEL/CentOS/Rocky:
+sudo yum install sssd realmd oddjob oddjob-mkhomedir adcli samba-common-tools
+On Ubuntu/Debian:
+sudo apt install sssd realmd oddjob oddjob-mkhomedir adcli samba-common-bin
+🌐 Step 2: Discover the Domain
+realm discover corp.example.com
+Output should show AD details like configured: no, domain controllers, etc.
+
+🔐 Step 3: Join the Domain
+sudo realm join --user=administrator corp.example.com
+Replace administrator with a domain account that has rights to join computers to the domain.
+
+🔧 Step 4: Configure SSSD (Optional but Recommended)
+Edit /etc/sssd/sssd.conf:
+[sssd]
+domains = corp.example.com
+config_file_version = 2
+services = nss, pam
+
+[domain/corp.example.com]
+id_provider = ad
+access_provider = ad
+override_homedir = /home/%u@%d
+default_shell = /bin/bash
+
+Set permissions:
+sudo chmod 600 /etc/sssd/sssd.conf
+
+Then restart:
+sudo systemctl restart sssd
+
+🛂 Step 5: Allow AD Logins (Optional)
+By default, only certain users may log in. To allow specific users or groups:
+sudo realm permit username@corp.example.com
+
+To allow everyone:
+sudo realm permit --all
+
+🧪 Step 6: Test Authentication
+id username@corp.example.com
+getent passwd username@corp.example.com
+Try logging in:
+ssh username@corp.example.com@localhost
+
+🏠 Step 7: Auto Home Directory Creation
+Ensure oddjob-mkhomedir is enabled:
+sudo systemctl enable --now oddjobd
+Ensure PAM is configured (usually automatic with realm join), or check /etc/pam.d/common-session contains:
+session required pam_mkhomedir.so skel=/etc/skel/ umask=0077
+✅ Verification
+Check logs: /var/log/sssd/, journalctl -u sssd, /var/log/secure
+
+Ensure DNS can resolve AD servers
+
+Ensure the system clock is in sync (important for Kerberos!)
