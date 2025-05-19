@@ -75,3 +75,7 @@ Check logs: /var/log/sssd/, journalctl -u sssd, /var/log/secure
 Ensure DNS can resolve AD servers
 
 Ensure the system clock is in sync (important for Kerberos!)
+
+Check if user will be permitted on denied
+- sudo sssctl user-checks FQDN
+
