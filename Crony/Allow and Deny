@@ -2,3 +2,7 @@ Allow crontab access to ammar user and deny the same to rod user.
 
 echo "ammar" > /etc/cron.allow
 echo "rod" > /etc/cron.deny
+
+If using SSSD, use FQDN
+echo "ammar@test.local" > /etc/cron.allow
+echo "rod@test.local" > /etc/cron.deny
