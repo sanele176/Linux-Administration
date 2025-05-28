@@ -41,7 +41,7 @@ services = nss, pam
 
 [domain/corp.example.com]
 id_provider = ad
-access_provider = ad
+access_provider = ad or simple
 override_homedir = /home/%u@%d
 default_shell = /bin/bash
 
