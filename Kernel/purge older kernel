@@ -1,0 +1,27 @@
+✅ To Boot into the Newest Kernel
+Check current running kernel:
+uname -r
+
+List GRUB boot entries:
+awk -F\' '$1=="menuentry " {print i++ " : " $2}' /etc/grub2.cfg
+
+Output will look like:
+
+0 : Oracle Linux Server with Unbreakable Enterprise Kernel 5.4.17-2136...
+1 : Oracle Linux Server with Unbreakable Enterprise Kernel 5.4.17-2102...
+2 : Oracle Linux Server with Red Hat Compatible Kernel 3.10.0-1160...
+
+Set the latest UEK as default (entry 0 in this case):
+sudo grub2-set-default 0
+Reboot:
+sudo reboot
+
+Verify you're running the latest kernel:
+uname -r
+You should now see:
+5.4.17-2136.338.4.2.el7uek.x86_64
+
+🧼 Optional: Clean Up Old Kernels
+To keep only the most recent kernel:
+
+sudo package-cleanup --oldkernels --count=1
