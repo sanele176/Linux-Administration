@@ -25,3 +25,22 @@ You should now see:
 To keep only the most recent kernel:
 
 sudo package-cleanup --oldkernels --count=1
+
+
+To roll back to older kernel
+
+awk -F\' '$1=="menuentry " {print i++ " : " $2}' /etc/grub2.cfg
+
+Output will look like:
+
+0 : Oracle Linux Server with Unbreakable Enterprise Kernel 5.4.17-2136...
+1 : Oracle Linux Server with Unbreakable Enterprise Kernel 5.4.17-2102...
+2 : Oracle Linux Server with Red Hat Compatible Kernel 3.10.0-1160...
+
+sudo grub2-set-default 1
+
+🔄 Optional: Boot Once into an Older Kernel (temporary)
+This will boot into a kernel once, then revert to the default on next boot:
+
+sudo grub2-reboot 1
+sudo reboot
