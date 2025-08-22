@@ -1,0 +1,4 @@
+sudo /opt/nessus_agent/sbin/nessuscli agent link \
+  --key=<your-linking-key> \
+  --host=<manager-host-or-cloud> \
+  --port=8834
