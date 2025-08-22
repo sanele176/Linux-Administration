@@ -1,0 +1,4 @@
+- rpm -qi NessusAgent | grep Version
+- Get latest rpm file
+- sudo yum install -y ./NessusAgent-10.9.0-el7.x86_64.rpm
+- sudo systemctl restart nessusagent
