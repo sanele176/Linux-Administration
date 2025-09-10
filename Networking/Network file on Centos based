@@ -3,3 +3,6 @@
 for dhcp config
 
 /etc/dhcp/dhcpclient.conf
+
+usually contains one line command
+- send dhcp-client-identifier = hardware;
