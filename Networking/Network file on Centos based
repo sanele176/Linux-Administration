@@ -1,1 +1,5 @@
 /etc/sysconfig/network-scripts
+
+for dhcp config
+
+/etc/dhcp/dhcpclient.conf
