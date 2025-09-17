@@ -1,0 +1,9 @@
+Add this repository information to the /etc/apt/sources.list file.
+
+bob@ubuntu-host /etc/apt🔒 ➜  sudo vim sources.list
+And add the repo
+
+deb http://us.archive.ubuntu.com/ubuntu/ focal main
+Run the below command
+
+sudo apt update 
