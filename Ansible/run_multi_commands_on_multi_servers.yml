@@ -1,0 +1,157 @@
+---
+- name: Gather System Information and Save to File
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  tasks:
+
+    - name: Get hostname
+      command: hostname
+      register: hostname_output
+      changed_when: false
+
+    - name: Get uname -a
+      command: uname -a
+      register: uname_output
+      changed_when: false
+
+    - name: Get /etc/os-release content
+      command: cat /etc/os-release
+      register: os_release_output
+      changed_when: false
+
+    - name: Get df -kh output
+      command: df -kh
+      register: df_output
+      changed_when: false
+
+    - name: Get free -g output
+      command: free -g
+      register: free_output
+      changed_when: false
+
+    - name: Get CPU info (processors)
+      shell: grep "processor" /proc/cpuinfo
+      register: cpuinfo_output
+      changed_when: false
+
+    - name: Get timedatectl output
+      command: timedatectl
+      register: timedatectl_output
+      changed_when: false
+
+    - name: Get chronyc sources output
+      command: chronyc sources
+      register: chronyc_output
+      ignore_errors: yes
+      changed_when: false
+
+    - name: Get iptables -L output
+      command: iptables -L
+      register: iptables_output
+      changed_when: false
+
+    - name: Get NetworkManager status
+      command: systemctl status NetworkManager
+      register: nm_status_output
+      changed_when: false
+      ignore_errors: yes
+
+    - name: Get firewalld status
+      command: systemctl status firewalld
+      register: firewall_status_output
+      changed_when: false
+      ignore_errors: yes
+
+    - name: Get SELinux status
+      command: sestatus
+      register: sestatus_output
+      changed_when: false
+
+    - name: Get yum repolist
+      command: yum repolist
+      register: yum_repolist_output
+      changed_when: false
+
+    - name: Create system report file
+      copy:
+        dest: /tmp/system_report.txt
+        content: |
+          ================================
+          System Report for {{ inventory_hostname }}
+          ================================
+
+          ---------- Hostname ----------
+          Command: hostname
+          {{ hostname_output.stdout }}
+
+          ---------- Uname ----------
+          Command: uname -a
+          {{ uname_output.stdout }}
+
+          ---------- OS Release ----------
+          Command: cat /etc/os-release
+          {{ os_release_output.stdout }}
+
+          ---------- Disk Usage ----------
+          Command: df -kh
+          {{ df_output.stdout }}
+
+          ---------- Memory Usage ----------
+          Command: free -g
+          {{ free_output.stdout }}
+
+          ---------- CPU Info ----------
+          Command: grep "processor" /proc/cpuinfo
+          {{ cpuinfo_output.stdout }}
+
+          ---------- Time/Date Info ----------
+          Command: timedatectl
+          {{ timedatectl_output.stdout }}
+
+          ---------- Chrony Sources ----------
+          Command: chronyc sources
+          {% if chronyc_output.rc == 0 %}
+          {{ chronyc_output.stdout }}
+          {% else %}
+          chronyc not available
+          {% endif %}
+
+          ---------- Iptables Rules ----------
+          Command: iptables -L
+          {{ iptables_output.stdout }}
+
+          ---------- NetworkManager Status ----------
+          Command: systemctl status NetworkManager
+          {% if nm_status_output.rc == 0 %}
+          {{ nm_status_output.stdout }}
+          {% else %}
+          NetworkManager not available
+          {% endif %}
+
+          ---------- Firewalld Status ----------
+          Command: systemctl status firewalld
+          {% if firewall_status_output.rc == 0 %}
+          {{ firewall_status_output.stdout }}
+          {% else %}
+          firewalld not available or disabled
+          {% endif %}
+
+          ---------- SELinux Status ----------
+          Command: sestatus
+          {{ sestatus_output.stdout }}
+
+          ---------- Yum Repositories ----------
+          Command: yum repolist
+          {{ yum_repolist_output.stdout }}
+
+          ================================
+          END OF REPORT
+          ================================
+
+    - name: Fetch report back to control node with hostname in filename
+      fetch:
+        src: /tmp/system_report.txt
+        dest: "./reports/{{ inventory_hostname }}_system_report.txt"
+        flat: yes
