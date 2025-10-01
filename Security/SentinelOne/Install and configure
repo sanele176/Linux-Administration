@@ -1,0 +1,8 @@
+- Install
+  rpm -ivh SentinelAgent_linux_x86_64_v23_2_2_4.rpm
+
+- Register with token
+  sentinelctl management token set "token here"
+
+- check status
+  sudo /opt/sentinelone/bin/sentinelctl management status
