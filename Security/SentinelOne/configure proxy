@@ -1,0 +1,2 @@
+/opt/sentinelone/bin/sentinelctl management proxy set http://56.254.26.2:8080
+/opt/sentinelone/bin/sentinelctl control restart
