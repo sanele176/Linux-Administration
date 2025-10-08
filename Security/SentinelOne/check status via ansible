@@ -1,0 +1,1 @@
+ansible all -m shell -a "sudo /opt/sentinelone/bin/sentinelctl management status | grep Connectivity" -b -i inventory
