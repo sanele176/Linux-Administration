@@ -1,0 +1,6 @@
+sudo fsch /dev/sda1
+  or if mounted
+sudo tune2fs -l /dev/sda1
+
+schedule file check
+sudo tune2fs -i 1w /dev/sda1
